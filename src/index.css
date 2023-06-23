@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  color: white;
+  
+}
+
+.background-pomodoro{
+  background-color: #ba4949;
+}
+
+.background-break{
+  background-color: #397097;
+}
+
+.container{
+  width: 600px;
+  margin: 1% auto;
+  
+}
+
+.transparent-background{
+  background: none rgba(0, 0, 0, 0.15)
+}
+
+.timer-div{
+  margin: 0 10%;
+
+}
+
+.addtask{
+  margin: 3% 10%;
+}
+
+.tasks{
+  margin: 1% 10%;
+}
+
+.taskbox-pomodoro{
+  background-color: #ab4343;
+
+}
+
+.taskbox-break{
+  background-color: #34678b;
+}
+
+.addtask-background{
+  background-color: white;
+}
+
+
+.timer-div-pomodoro{
+  background: none rgb(193,92,92);
+}
+
+.timer-div-break{
+  background: #4d7fa2;
+}
+
+.addtask-text-color{
+  color: black;
+}
+
+input:focus{
+  outline: none;
+}
+
+.input-background{
+  background-color: #efefef;
+  width: 10%;
+}
+
+.textarea-background{
+  background-color: #efefef;
+  width: 99.5%;
+}
+
+.background-note{
+  background-color: #fcf8de;
+}
