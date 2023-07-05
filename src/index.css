@@ -9,10 +9,16 @@ body{
 
 .background-pomodoro{
   background-color: #ba4949;
+  --timer-color: rgb(193,92,92)
 }
 
 .background-break{
   background-color: #397097;
+  --timer-color: #4d7fa2;
+}
+
+.background-longbreak{
+  background-color: green;
 }
 
 .container{
@@ -52,13 +58,11 @@ body{
 }
 
 
-.timer-div-pomodoro{
-  background: none rgb(193,92,92);
+.timer-color{
+  background-color: var(--timer-color);
 }
 
-.timer-div-break{
-  background: #4d7fa2;
-}
+
 
 .addtask-text-color{
   color: black;

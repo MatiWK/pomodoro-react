@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { Context } from '../contexts/CounterContext';
 
 const AddTask = (props) => {
     const [count, setCount] = useState(Number(1));
@@ -24,14 +25,14 @@ const AddTask = (props) => {
         
     }
 
-    
+    const value = useContext(Context);
 
   return (
     <div className='addtask-background addtask addtask-text-color font-bold rounded-xl ' >
         <form className='my-3'>
         <div className='mx-3'>
         <input type="text" placeholder='What are you working on?' value={values.title} name="title" className='text-2xl mt-3' onChange={handleChange}></input>
-            <h1 className='my-5 text-xl'>Est Pomodoros</h1>
+            <h1 className='my-5 text-xl'>Est Pomodoros {value}</h1>
             <div className='flex'>
                 <input placeholder={count} type="number"  className='input-background px-2 py-1 rounded-lg'></input>
                     <button type="button" onClick={()  => setCount(count + 1)} className='ml-3'>

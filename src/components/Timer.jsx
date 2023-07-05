@@ -16,7 +16,11 @@ import TimerButtons from './TimerButtons';
         pomodoro: true,
         shortbreak: false,
         longbreak: false
+      },
+      pickNextMode: (howManyPomodorosElapsed) => {
+        return howManyPomodorosElapsed < 4 ? modes.shortbreakTimer : modes.longbreakTimer ; 
       }
+      // backgroundColor: 
     },
     shortbreakTimer: {
       initialTime: shortbreakLength,
@@ -25,6 +29,9 @@ import TimerButtons from './TimerButtons';
         pomodoro: false,
         shortbreak: true,
         longbreak: false
+      },
+      pickNextMode: () => {
+        return modes.pomodoroTimer;
       }
     },
     longbreakTimer: {
@@ -34,6 +41,9 @@ import TimerButtons from './TimerButtons';
         pomodoro: false,
         shortbreak: false,
         longbreak: true
+      },
+      pickNextMode: () => {
+        return modes.pomodoroTimer;
       }
     }
   }
@@ -44,7 +54,6 @@ const Timer = (props) => {
     
     const [time, setTime] = useState(pomodoroTimer.initialTime)
     const [isRunning, setIsRunning] = useState(false);
-    const [isDone, setIsDone] = useState(false);
     const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
 
     const colorLinks = {
@@ -52,10 +61,9 @@ const Timer = (props) => {
       break: "break"
     }
     
-    function play(){
-      new Audio(sound).play()
-      setIsDone(false)
-    }
+    
+
+   
 
     
     // DECONSTRUCTION TO MAKE IT MORE APPEALING TO AN EYE
@@ -74,8 +82,9 @@ const Timer = (props) => {
           
           if(time === 0){
             setIsRunning(false)
-            setIsDone(true)
-           
+
+            new Audio(sound).play()
+            
             if(pomodoro){
               props.backgroundChange(colorLinks.break)
               setTime(shortbreakTimer.initialTime)
@@ -104,7 +113,6 @@ const Timer = (props) => {
     
     function startStop(){
       setIsRunning((prev) => !prev);
-      setIsDone(false);
 
     }
 
@@ -169,6 +177,8 @@ const Timer = (props) => {
       return `${String(minutes).padStart(2, "0")}: ${String(seconds).padStart(2, "0")}`;
     }
 
+
+
   return (
     <div>
     
@@ -200,7 +210,7 @@ const Timer = (props) => {
             <path d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z" />
           </svg>
         </button>}
-        <h1 className='text-9 xl'>{isDone && play()}</h1>
+
        </div>
         
     </div>

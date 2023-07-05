@@ -8,7 +8,6 @@ import Tasks from './components/Tasks'
 
 function App() {
   const [backgroundColor, setbackgroundColor] = useState("background-pomodoro");
-  const [backgroundTimer, setbackgroundTimer] = useState("timer-div-pomodoro");
   const [taskColor, setTaskColor] = useState("taskbox-pomodoro")
   const [running, isRunning] = useState(true);
   const [clicked, setClicked] = useState(false);
@@ -19,12 +18,10 @@ function App() {
   function colorSwitch(name){
     if (name === "Pomodoro") {
       setbackgroundColor("background-pomodoro") 
-      setbackgroundTimer("timer-div-pomodoro")
       setTaskColor("taskbox-pomodoro")
       isRunning(true)
     } else {
       setbackgroundColor("background-break") 
-      setbackgroundTimer("timer-div-break")
       setTaskColor("taskbox-break")
       isRunning(false)
     }
@@ -55,7 +52,7 @@ function App() {
     <div className={backgroundColor  + " w-screen min-h-screen flex"}>
       <div className='container' >
         <Nav />
-        <div className={backgroundTimer  + ' timer-div text-center rounded-lg font-bold'}>
+        <div className={' timer-color timer-div text-center rounded-lg font-bold'}>
           <Timer backgroundChange={colorSwitch} />
           
         </div>
@@ -65,7 +62,7 @@ function App() {
         </div>
         <div className='flex justify-between timer-div'>
           <p>Tasks</p>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={"w-6 h-6 rounded-md " +  backgroundTimer}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={"w-6 h-6 rounded-md  timer-color"}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
         </div>
