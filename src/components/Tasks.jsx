@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Tasks = (props) => {
   return (
     <div className='tasks text-black bg-white rounded-md py-3 '>
@@ -11,6 +9,9 @@ const Tasks = (props) => {
           <h1 className='font-bold ml-3'>{props.title}</h1>
         </div>
         <div className='mr-3'>
+          <button type="button" className="mx-3"
+          onClick={() => props.editTask(props.id)}  
+          >Edit</button>
           <button type="button"
           onClick={() => props.deleteTask(props.id)}  
           className=' border-solid border-2 border-grey rounded-md'>

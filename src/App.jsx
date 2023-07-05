@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import './App.css'
 import Nav from './components/Nav'
-import TimerButtons from './components/TimerButtons'
+// import TimerButtons from './components/TimerButtons'
 import Timer from './components/Timer'
 import AddTask from './components/AddTask'
 import Tasks from './components/Tasks'
@@ -13,10 +13,11 @@ function App() {
   const [running, isRunning] = useState(true);
   const [clicked, setClicked] = useState(false);
   const [tasks, setTasks] = useState([]);
+  // const [editing, setEditing] = useState(false);
   
 
   function colorSwitch(name){
-    if (name === "pomodoro") {
+    if (name === "Pomodoro") {
       setbackgroundColor("background-pomodoro") 
       setbackgroundTimer("timer-div-pomodoro")
       setTaskColor("taskbox-pomodoro")
@@ -40,6 +41,13 @@ function App() {
     setTasks(() => tasks.filter((task, index) => index !== id));
  }
 
+ function editTask(id) {
+    setTasks(() => tasks.filter((task, index) => {
+      // setEditing(true);
+      return index !== id
+    }))
+   
+ }
 
 
   return (
@@ -68,12 +76,14 @@ function App() {
 
           {tasks.map((task, index) => {
             return (
+              
               <Tasks
               key={index}
               id={index}
               title={task.title}
               note={task.note}
               deleteTask={deleteitem}
+              editTask={editTask}
               />
             );
           })}

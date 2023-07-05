@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 const AddTask = (props) => {
     const [count, setCount] = useState(Number(1));
