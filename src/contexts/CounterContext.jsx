@@ -16,7 +16,7 @@ import { colorLinks } from "../components/colorLinks";
 
 //     return <ChoosenTimer.Provider value={[chosenTimer, setChosenTimer]}>{children}</ChoosenTimer.Provider>
 // }
-const { pomodoroTimer, shortbreakTimer } = modes;
+const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
 export const TimerContext = createContext(null);
 export const TimerProvider = ({ children }) => {
   const [time, setTime] = useState(pomodoroTimer.initialTime);
@@ -74,28 +74,71 @@ export const TimerProvider = ({ children }) => {
     }
 
     return () => clearInterval(interval);
-  }, [
-    time,
-    isRunning,
-    pomodoroTimer.initialTime,
-    pomodoro,
-    shortbreak,
-    shortbreakTimer.initialTime,
-    shortbreakTimer.chooseTimer,
-    pomodoroTimer.chooseTimer,
-    setIsRunning,
-    colorSwitch,
-  ]);
+  }, [time, isRunning, pomodoro, shortbreak, setIsRunning, colorSwitch]);
+   // CHOOSING COUNTDOWN LOGIC
+   function handlePomodoro() {
+      
+    // choses link to apply styling to
+    setChosenTimer(pomodoroTimer.chooseTimer)
+    // sets time according to the selected one
+    setTime(pomodoroTimer.initialTime)
+    setIsRunning(false);
+
+    // sends chosen link to app.jsx
+    colorSwitch(colorLinks.pomodoro)
+
+  }
+
+  function handleShortbreak() {
+    setChosenTimer(shortbreakTimer.chooseTimer)
+    setTime(shortbreakTimer.initialTime)
+    setIsRunning(false);
+    
+    colorSwitch(colorLinks.break)
+
+  }
+  
+  function handleLongBreak() {
+    setChosenTimer(longbreakTimer.chooseTimer)
+    setTime(longbreakTimer.initialTime)
+    setIsRunning(false);
+    
+    colorSwitch(colorLinks.break)
+
+  }
+  function restart() {
+    if (pomodoro) {
+      setTime(shortbreakTimer.initialTime);
+      setChosenTimer(shortbreakTimer.chooseTimer);
+      colorSwitch(colorLinks.break);
+    } else if (shortbreak) {
+      setTime(pomodoroTimer.initialTime);
+      setChosenTimer(pomodoroTimer.chooseTimer);
+      colorSwitch(colorLinks.pomodoro);
+    } else {
+      setTime(pomodoroTimer.initialTime);
+      setChosenTimer(pomodoroTimer.chooseTimer);
+      colorSwitch(colorLinks.pomodoro);
+    }
+    setIsRunning(false);
+  }
+  function toggle() {
+    setIsRunning((prev) => !prev);
+  }
 
   const value = {
     time,
-    setTime,
     chosenTimer,
-    setChosenTimer,
-    colorSwitch,
     backgroundColor,
     taskColor,
-    running
+    running,
+    handlers: {
+      handleLongBreak,
+      handlePomodoro,
+      handleShortbreak
+    },
+    restart,
+    toggle
   };
 
   return (
