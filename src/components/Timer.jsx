@@ -1,67 +1,22 @@
-import { useContext, useEffect } from 'react'
-import sound from "../assets/sound.mp3"
+import { useContext } from 'react'
 import TimerButtons from './TimerButtons';
 import { IsRunning, useTimer } from '../contexts/CounterContext';
+import { modes } from '../contexts/modes';
+import { formatTime } from './formatTime';
+import { colorLinks } from './colorLinks';
 
   // POSSIBLE COUNTDOWN LENGTHS
-  const longbreakLength = 10 * 60;
-  const shortbreakLength = 5 * 60;
-  const pomodoroLength = 25 * 60;
-
-  // MODES
-  const modes = {
-    pomodoroTimer: {
-      initialTime: pomodoroLength,
-      label: "Pomodoro",
-      chooseTimer: {
-        pomodoro: true,
-        shortbreak: false,
-        longbreak: false
-      },
-      pickNextMode: (howManyPomodorosElapsed) => {
-        return howManyPomodorosElapsed < 4 ? modes.shortbreakTimer : modes.longbreakTimer ; 
-      }
-      // backgroundColor: 
-    },
-    shortbreakTimer: {
-      initialTime: shortbreakLength,
-      label: "Short Break",
-      chooseTimer: {
-        pomodoro: false,
-        shortbreak: true,
-        longbreak: false
-      },
-      pickNextMode: () => {
-        return modes.pomodoroTimer;
-      }
-    },
-    longbreakTimer: {
-      initialTime: longbreakLength,
-      label: "Long Break",
-      chooseTimer: {
-        pomodoro: false,
-        shortbreak: false,
-        longbreak: true
-      },
-      pickNextMode: () => {
-        return modes.pomodoroTimer;
-      }
-    }
-  }
+  
 
 
-const Timer = (props) => {
+const Timer = () => {
   const {pomodoroTimer, shortbreakTimer, longbreakTimer} = modes;
     
     // const [time, setTime] = useContext(Time)
-    const {time, setTime, chosenTimer, setChosenTimer} = useTimer()
+    const {time, setTime, chosenTimer, setChosenTimer, colorSwitch} = useTimer()
     const [isRunning, setIsRunning] = useContext(IsRunning)
     // const [chosenTimer, setChosenTimer] = useContext(ChoosenTimer)
 
-    const colorLinks = {
-      pomodoro: pomodoroTimer.label,
-      break: "break"
-    }
     
     
 
@@ -74,44 +29,7 @@ const Timer = (props) => {
     const inactiveButton = "mx-3"
     const activeButton = inactiveButton + " transparent-background px-2 py-1 rounded-lg";
 
-    useEffect(() => {
-
-      let interval;
-
-      if(isRunning){
-
-        interval = setInterval(() => {
-          
-          if(time === 0){
-            setIsRunning(false)
-
-            new Audio(sound).play()
-            
-            if(pomodoro){
-              props.backgroundChange(colorLinks.break)
-              setTime(shortbreakTimer.initialTime)
-              setChosenTimer(shortbreakTimer.chooseTimer);
-            }else if (shortbreak){
-              props.backgroundChange(colorLinks.pomodoro)
-              setTime(pomodoroTimer.initialTime)
-              setChosenTimer(pomodoroTimer.chooseTimer);
-            }else{
-              props.backgroundChange(colorLinks.pomodoro)
-              setTime(pomodoroTimer.initialTime)
-              setChosenTimer(pomodoroTimer.chooseTimer);
-            }
-
-          }else{
-            setTime(time - 1)
-          }
-          
-        }, 1000)
-      } else {
-        clearInterval(interval);
-      }
-
-      return () => clearInterval(interval);
-    }, [time, isRunning, pomodoroTimer.initialTime, pomodoro, shortbreak, props, colorLinks.break, colorLinks.pomodoro, shortbreakTimer.initialTime, shortbreakTimer.chooseTimer, pomodoroTimer.chooseTimer]);
+   
     
     function startStop(){
       setIsRunning((prev) => !prev);
@@ -123,16 +41,16 @@ const Timer = (props) => {
       if(pomodoro){
         setTime(shortbreakTimer.initialTime)
         setChosenTimer(shortbreakTimer.chooseTimer)
-        props.backgroundChange(colorLinks.break)
+        colorSwitch(colorLinks.break)
 
       } else if (shortbreak){
         setTime(pomodoroTimer.initialTime)
         setChosenTimer(pomodoroTimer.chooseTimer)
-        props.backgroundChange(colorLinks.pomodoro)
+        colorSwitch(colorLinks.pomodoro)
       } else {
         setTime(pomodoroTimer.initialTime)
         setChosenTimer(pomodoroTimer.chooseTimer)
-        props.backgroundChange(colorLinks.pomodoro)
+        colorSwitch(colorLinks.pomodoro)
       }
       setIsRunning(false);
     }
@@ -149,7 +67,7 @@ const Timer = (props) => {
       setIsRunning(false);
 
       // sends chosen link to app.jsx
-      props.backgroundChange(colorLinks.pomodoro)
+      colorSwitch(colorLinks.pomodoro)
 
     }
   
@@ -159,7 +77,7 @@ const Timer = (props) => {
       setTime(shortbreakTimer.initialTime)
       setIsRunning(false);
       
-      props.backgroundChange(colorLinks.break)
+      colorSwitch(colorLinks.break)
 
     }
     
@@ -169,15 +87,11 @@ const Timer = (props) => {
       setTime(longbreakTimer.initialTime)
       setIsRunning(false);
       
-      props.backgroundChange(colorLinks.break)
+      colorSwitch(colorLinks.break)
 
     }
 
-    function formatTime(time){
-      const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
-      return `${String(minutes).padStart(2, "0")}: ${String(seconds).padStart(2, "0")}`;
-    }
+    
 
 
 
@@ -220,3 +134,5 @@ const Timer = (props) => {
 }
 
 export default Timer
+
+

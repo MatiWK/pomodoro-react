@@ -5,27 +5,19 @@ import Nav from './components/Nav'
 import Timer from './components/Timer'
 import AddTask from './components/AddTask'
 import Tasks from './components/Tasks'
-import { Background, TaskColor, Running, Clicked, Taskss } from './contexts/CounterContext'
+import { Clicked, Taskss, useTimer } from './contexts/CounterContext'
 
 function App() {
-  const [backgroundColor, setbackgroundColor] = useContext(Background);
-  const [taskColor, setTaskColor] = useContext(TaskColor);
-  const [running, isRunning] = useContext(Running);
+  const {
+    running,
+    backgroundColor,
+    taskColor
+  } = useTimer();
   const [clicked, setClicked] = useContext(Clicked);
   const [tasks, setTasks] = useContext(Taskss);
   
 
-  function colorSwitch(name){
-    if (name === "Pomodoro") {
-      setbackgroundColor("background-pomodoro") 
-      setTaskColor("taskbox-pomodoro")
-      isRunning(true)
-    } else {
-      setbackgroundColor("background-break") 
-      setTaskColor("taskbox-break")
-      isRunning(false)
-    }
-  }
+  
   
   function createTasks(title, note){
     setTasks((prev) => {
@@ -53,7 +45,7 @@ function App() {
       <div className='container' >
         <Nav />
         <div className={' timer-color timer-div text-center rounded-lg font-bold'}>
-          <Timer backgroundChange={colorSwitch} />
+          <Timer />
           
         </div>
         <div className='text-center text-xl'>
