@@ -1,68 +1,41 @@
-import React, {useState} from "react";
-
- // POSSIBLE COUNTDOWN LENGTHS
- const longbreakLength = 10 * 60;
- const shortbreakLength = 5 * 60;
- const pomodoroLength = 25 * 60;
-
- // MODES
- const modes = {
-   pomodoroTimer: {
-     initialTime: pomodoroLength,
-     label: "Pomodoro",
-     chooseTimer: {
-       pomodoro: true,
-       shortbreak: false,
-       longbreak: false
-     },
-     pickNextMode: (howManyPomodorosElapsed) => {
-       return howManyPomodorosElapsed < 4 ? modes.shortbreakTimer : modes.longbreakTimer ; 
-     }
-     // backgroundColor: 
-   },
-   shortbreakTimer: {
-     initialTime: shortbreakLength,
-     label: "Short Break",
-     chooseTimer: {
-       pomodoro: false,
-       shortbreak: true,
-       longbreak: false
-     },
-     pickNextMode: () => {
-       return modes.pomodoroTimer;
-     }
-   },
-   longbreakTimer: {
-     initialTime: longbreakLength,
-     label: "Long Break",
-     chooseTimer: {
-       pomodoro: false,
-       shortbreak: false,
-       longbreak: true
-     },
-     pickNextMode: () => {
-       return modes.pomodoroTimer;
-     }
-   }
- }
+import React, {createContext, useContext, useState} from "react";
+import { modes } from "./modes";
 
  const {pomodoroTimer} = modes;
 
-export const Time = React.createContext();
-export const TimeProvider = ({children}) => {
-    const [time, setTime] = useState(pomodoroTimer.initialTime)
+// export const Time = React.createContext();
+// export const TimeProvider = ({children}) => {
+//     const [time, setTime] = useState(pomodoroTimer.initialTime)
 
-    return <Time.Provider value={[time, setTime]}>{children}</Time.Provider>
+//     return <Time.Provider value={[time, setTime]}>{children}</Time.Provider>
+// }
+
+
+// export const ChoosenTimer = React.createContext();
+// export const ChoosenTimerProvider = ({children}) => {
+//     const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
+
+//     return <ChoosenTimer.Provider value={[chosenTimer, setChosenTimer]}>{children}</ChoosenTimer.Provider>
+// }
+
+export const TimerContext = createContext(null);
+export const TimerProvider = ({children}) => {
+  const [time, setTime] = useState(pomodoroTimer.initialTime)
+  const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
+
+  const value = {
+    time, setTime, chosenTimer, setChosenTimer
+  }
+
+  return <TimerContext.Provider value={value}>{children}</TimerContext.Provider>
 }
-
-
-export const ChoosenTimer = React.createContext();
-export const ChoosenTimerProvider = ({children}) => {
-    const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
-
-    return <ChoosenTimer.Provider value={[chosenTimer, setChosenTimer]}>{children}</ChoosenTimer.Provider>
-}
-
+export const useTimer = () => {
+  const value = useContext(TimerContext)
+  if (value  === null) {
+    throw new Error(`missing timer provider`);
+  }
+  return value;
+} 
 
 
 export const Context = React.createContext(10);

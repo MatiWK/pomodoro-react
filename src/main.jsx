@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { CounterProvider, BackgroundProvider, TaskColorProvider, RunningProvider, ClickedProvider, TasksProvider, ValueProvider, ClickedAddNoteProvider,
-  CountProvider, IsRunningProvider, TimeProvider, ChoosenTimerProvider } from './contexts/CounterContext'
+  CountProvider, IsRunningProvider, TimerProvider } from './contexts/CounterContext'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -18,11 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ClickedAddNoteProvider>
     <CountProvider>
     <IsRunningProvider>
-    <TimeProvider>
-    <ChoosenTimerProvider>
+    <TimerProvider>
       <App />
-    </ChoosenTimerProvider>
-    </TimeProvider>
+      </TimerProvider>
     </IsRunningProvider>
     </CountProvider>
     </ClickedAddNoteProvider>

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import sound from "../assets/sound.mp3"
 import TimerButtons from './TimerButtons';
-import { IsRunning, Time, ChoosenTimer } from '../contexts/CounterContext';
+import { IsRunning, useTimer } from '../contexts/CounterContext';
 
   // POSSIBLE COUNTDOWN LENGTHS
   const longbreakLength = 10 * 60;
@@ -53,9 +53,10 @@ import { IsRunning, Time, ChoosenTimer } from '../contexts/CounterContext';
 const Timer = (props) => {
   const {pomodoroTimer, shortbreakTimer, longbreakTimer} = modes;
     
-    const [time, setTime] = useContext(Time)
+    // const [time, setTime] = useContext(Time)
+    const {time, setTime, chosenTimer, setChosenTimer} = useTimer()
     const [isRunning, setIsRunning] = useContext(IsRunning)
-    const [chosenTimer, setChosenTimer] = useContext(ChoosenTimer)
+    // const [chosenTimer, setChosenTimer] = useContext(ChoosenTimer)
 
     const colorLinks = {
       pomodoro: pomodoroTimer.label,
