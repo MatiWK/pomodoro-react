@@ -1,13 +1,10 @@
-import { useContext, useState } from 'react'
-import { Context } from '../contexts/CounterContext';
+import { useContext } from 'react'
+import { Context, Value, ClickedAddNote, Count } from '../contexts/CounterContext';
 
 const AddTask = (props) => {
-    const [count, setCount] = useState(Number(1));
-    const [clicked, setClicked] = useState(false);
-    const [values, setValues] = useState({
-        title: "",
-        note: ""
-    })
+    const [count, setCount] = useContext(Count);
+    const [clicked, setClicked] = useContext(ClickedAddNote);
+    const [values, setValues] = useContext(Value)
 
     const {title, note} = values;
 
@@ -57,7 +54,9 @@ const AddTask = (props) => {
             <div className='flex justify-end px-2 py-3 rounded-b-xl' style={{backgroundColor: "#efefef"}}>
                 <button 
                 name="cancel" type="button" className='mx-2'
-                onClick={() => props.cancelCreation()}
+                onClick={() =>  {props.cancelCreation()
+                
+                }}
                 >Cancel</button>
                 <button name="save" type="button"
                 onClick={() => {

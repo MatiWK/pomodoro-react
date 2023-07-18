@@ -1,18 +1,18 @@
-import {  useState } from 'react'
+import {  useContext } from 'react'
 import './App.css'
 import Nav from './components/Nav'
 // import TimerButtons from './components/TimerButtons'
 import Timer from './components/Timer'
 import AddTask from './components/AddTask'
 import Tasks from './components/Tasks'
+import { Background, TaskColor, Running, Clicked, Taskss } from './contexts/CounterContext'
 
 function App() {
-  const [backgroundColor, setbackgroundColor] = useState("background-pomodoro");
-  const [taskColor, setTaskColor] = useState("taskbox-pomodoro")
-  const [running, isRunning] = useState(true);
-  const [clicked, setClicked] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  // const [editing, setEditing] = useState(false);
+  const [backgroundColor, setbackgroundColor] = useContext(Background);
+  const [taskColor, setTaskColor] = useContext(TaskColor);
+  const [running, isRunning] = useContext(Running);
+  const [clicked, setClicked] = useContext(Clicked);
+  const [tasks, setTasks] = useContext(Taskss);
   
 
   function colorSwitch(name){
