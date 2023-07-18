@@ -1,5 +1,5 @@
 import TimerButtons from "./TimerButtons";
-import { useTimer } from "../contexts/CounterContext";
+import { useTimer } from "../contexts/TimerContext";
 import { formatTime } from "./formatTime";
 
 const Timer = () => {

@@ -1,11 +1,10 @@
-import { useTimer } from "../contexts/CounterContext";
+import { useTimer } from "../contexts/TimerContext";
 import { modes } from "../contexts/modes";
 
 const inactiveButton = "mx-3";
 const activeButton =
   inactiveButton + " transparent-background px-2 py-1 rounded-lg";
-  const labels = modes;
-
+const labels = modes;
 
 const TimerButtons = () => {
   const { chosenTimer, handlers } = useTimer();
