@@ -1,37 +1,16 @@
-import { useContext } from "react";
 import "./App.css";
 import Nav from "./components/Nav";
 // import TimerButtons from './components/TimerButtons'
 import Timer from "./components/Timer";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
-import { Clicked, Taskss } from "./contexts/CounterContext";
 import { useTimer } from "./contexts/TimerContext";
+import { useTask } from "./contexts/TaskContext";
 
 function App() {
   const { running, backgroundColor, taskColor } = useTimer();
-  const [clicked, setClicked] = useContext(Clicked);
-  const [tasks, setTasks] = useContext(Taskss);
-
-  function createTasks(title, note) {
-    setTasks((prev) => {
-      return [...prev, { title: title, note: note, exist: true }];
-    });
-    console.log(tasks);
-  }
-
-  function deleteitem(id) {
-    setTasks(() => tasks.filter((task, index) => index !== id));
-  }
-
-  function editTask(id) {
-    setTasks(() =>
-      tasks.filter((task, index) => {
-        // setEditing(true);
-        return index !== id;
-      })
-    );
-  }
+  // const [clicked, setClicked] = useContext(Clicked);
+  const { tasks, createTasks, editTask, deleteitem, clicked, setClicked } = useTask();
 
   return (
     <>

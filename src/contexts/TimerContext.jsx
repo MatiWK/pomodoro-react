@@ -80,7 +80,8 @@ export const TimerProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, [time, isRunning, pomodoro, shortbreak, setIsRunning, colorSwitch]);
   // CHOOSING COUNTDOWN LOGIC
-  function handlePomodoro() {
+  function handlePomodoro(e) {
+    e.preventDefault();
     // choses link to apply styling to
     setChosenTimer(pomodoroTimer.chooseTimer);
     // sets time according to the selected one
@@ -91,7 +92,8 @@ export const TimerProvider = ({ children }) => {
     colorSwitch(colorLinks.pomodoro);
   }
 
-  function handleShortbreak() {
+  function handleShortbreak(e) {
+    e.preventDefault();
     setChosenTimer(shortbreakTimer.chooseTimer);
     setTime(shortbreakTimer.initialTime);
     setIsRunning(false);
@@ -99,7 +101,8 @@ export const TimerProvider = ({ children }) => {
     colorSwitch(colorLinks.break);
   }
 
-  function handleLongBreak() {
+  function handleLongBreak(e) {
+    e.preventDefault();
     setChosenTimer(longbreakTimer.chooseTimer);
     setTime(longbreakTimer.initialTime);
     setIsRunning(false);
@@ -132,6 +135,7 @@ export const TimerProvider = ({ children }) => {
     backgroundColor,
     taskColor,
     running,
+    isRunning,
     handlers: {
       handleLongBreak,
       handlePomodoro,
@@ -145,6 +149,7 @@ export const TimerProvider = ({ children }) => {
     <TimerContext.Provider value={value}>{children}</TimerContext.Provider>
   );
 };
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTimer = () => {
   const value = useContext(TimerContext);
   if (value === null) {

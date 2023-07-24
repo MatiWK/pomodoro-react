@@ -7,14 +7,11 @@ import {
   BackgroundProvider,
   TaskColorProvider,
   RunningProvider,
-  ClickedProvider,
-  TasksProvider,
-  ValueProvider,
-  ClickedAddNoteProvider,
   CountProvider,
   IsRunningProvider,
 } from "./contexts/CounterContext";
 import { TimerProvider } from "./contexts/TimerContext";
+import { TaskProvider } from "./contexts/TaskContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -22,21 +19,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BackgroundProvider>
         <TaskColorProvider>
           <RunningProvider>
-            <ClickedProvider>
-              <TasksProvider>
-                <ValueProvider>
-                  <ClickedAddNoteProvider>
-                    <CountProvider>
-                      <IsRunningProvider>
-                        <TimerProvider>
-                          <App />
-                        </TimerProvider>
-                      </IsRunningProvider>
-                    </CountProvider>
-                  </ClickedAddNoteProvider>
-                </ValueProvider>
-              </TasksProvider>
-            </ClickedProvider>
+              <CountProvider>
+                <IsRunningProvider>
+                  <TimerProvider>
+                    <TaskProvider>
+                      <App />
+                    </TaskProvider>
+                  </TimerProvider>
+                </IsRunningProvider>
+              </CountProvider>
           </RunningProvider>
         </TaskColorProvider>
       </BackgroundProvider>

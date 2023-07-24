@@ -36,49 +36,6 @@ export const RunningProvider = ({ children }) => {
   );
 };
 
-export const Clicked = React.createContext();
-export const ClickedProvider = ({ children }) => {
-  const [clicked, setClicked] = useState(false);
-
-  return (
-    <Clicked.Provider value={[clicked, setClicked]}>
-      {children}
-    </Clicked.Provider>
-  );
-};
-
-export const ClickedAddNote = React.createContext();
-export const ClickedAddNoteProvider = ({ children }) => {
-  const [clicked, setClicked] = useState(false);
-
-  return (
-    <ClickedAddNote.Provider value={[clicked, setClicked]}>
-      {children}
-    </ClickedAddNote.Provider>
-  );
-};
-
-export const Taskss = React.createContext();
-export const TasksProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]);
-
-  return (
-    <Taskss.Provider value={[tasks, setTasks]}>{children}</Taskss.Provider>
-  );
-};
-
-export const Value = React.createContext();
-export const ValueProvider = ({ children }) => {
-  const [values, setValues] = useState({
-    title: "",
-    note: "",
-  });
-
-  return (
-    <Value.Provider value={[values, setValues]}>{children}</Value.Provider>
-  );
-};
-
 export const Count = React.createContext();
 export const CountProvider = ({ children }) => {
   const [count, setCount] = useState(Number(1));
