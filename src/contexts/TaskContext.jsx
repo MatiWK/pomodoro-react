@@ -3,12 +3,20 @@ import { createContext, useContext, useState } from "react";
 export const TaskContext = createContext(null);
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [taskCreationActive, setTaskCreationActive] = useState(false);
   const [addClicked, setAddClicked] = useState(false);
   const [values, setValues] = useState({
     title: "",
     note: "",
   });
+
+  const openTaskCreationForm = () => {
+    setTaskCreationActive(true)
+  }
+
+  const closeTaskCreationForm = () => {
+    setTaskCreationActive(false)
+  }
 
   function createTasks(title, note) {
     setTasks((prev) => {
@@ -47,22 +55,21 @@ export const TaskProvider = ({ children }) => {
   const createTask = () => {
     createTasks(title, note);
     setAddClicked(false);
-    setClicked(false);
     setValues({ title: "", note: "" });
+    openTaskCreationForm()
   };
 
   const cancelCreate = () => {
     setAddClicked(false);
     setValues({ title: "", note: "" });
-    setClicked(false);
+    closeTaskCreationForm()
   };
 
   const value = {
     tasks,
     deleteitem,
     editTask,
-    clicked,
-    setClicked,
+    clicked: taskCreationActive,
     addClicked,
     setAddClicked,
     values,
@@ -70,6 +77,7 @@ export const TaskProvider = ({ children }) => {
     handleChange,
     createTask,
     cancelCreate,
+    openTaskCreationForm,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

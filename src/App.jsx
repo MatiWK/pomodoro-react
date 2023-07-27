@@ -3,13 +3,13 @@ import Nav from "./components/Nav";
 // import TimerButtons from './components/TimerButtons'
 import Timer from "./components/Timer";
 import AddTask from "./components/AddTask";
-import Tasks from "./components/Tasks";
+import { Task } from "./components/Tasks";
 import { useTimer } from "./contexts/TimerContext";
 import { useTask } from "./contexts/TaskContext";
 
 function App() {
   const { running, backgroundColor, taskColor } = useTimer();
-  const { tasks, editTask, deleteitem, clicked, setClicked } = useTask(); 
+  const { tasks, clicked, openTaskCreationForm } = useTask(); 
 
   return (
     <>
@@ -50,13 +50,12 @@ function App() {
           <div className="mt-3">
             {tasks.map((task, index) => {
               return (
-                <Tasks
+                <Task
                   key={index}
                   id={index}
                   title={task.title}
                   note={task.note}
-                  deleteTask={deleteitem}
-                  editTask={editTask}
+                  
                 />
               );
             })}
@@ -84,7 +83,7 @@ function App() {
                     d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <button onClick={() => setClicked(true)} className="mx-2">
+                <button onClick={openTaskCreationForm} className="mx-2">
                   Add Task
                 </button>
               </div>
