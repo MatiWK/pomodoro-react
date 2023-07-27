@@ -1,46 +1,5 @@
 import { createContext, useContext, useState } from "react";
 
-// export const Taskss = React.createContext();
-// export const TasksProvider = ({ children }) => {
-//   const [tasks, setTasks] = useState([]);
-//   return (
-//     <Taskss.Provider value={[tasks, setTasks]}>{children}</Taskss.Provider>
-//   );
-// };
-
-// export const Clicked = React.createContext();
-// export const ClickedProvider = ({ children }) => {
-//   const [clicked, setClicked] = useState(false);
-
-//   return (
-//     <Clicked.Provider value={[clicked, setClicked]}>
-//       {children}
-//     </Clicked.Provider>
-//   );
-// };
-
-// export const ClickedAddNote = React.createContext();
-// export const ClickedAddNoteProvider = ({ children }) => {
-//   const [clicked, setClicked] = useState(false);
-
-//   return (
-//     <ClickedAddNote.Provider value={[clicked, setClicked]}>
-//       {children}
-//     </ClickedAddNote.Provider>
-//   );
-// };
-// export const Value = React.createContext();
-// export const ValueProvider = ({ children }) => {
-//   const [values, setValues] = useState({
-//     title: "",
-//     note: "",
-//   });
-
-//   return (
-//     <Value.Provider value={[values, setValues]}>{children}</Value.Provider>
-//   );
-// };
-
 export const TaskContext = createContext(null);
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
@@ -83,10 +42,23 @@ export const TaskProvider = ({ children }) => {
 
     // console.log(title, note)
   }
+  const { title, note } = values;
+
+  const createTask = () => {
+    createTasks(title, note);
+    setAddClicked(false);
+    setClicked(false);
+    setValues({ title: "", note: "" });
+  };
+
+  const cancelCreate = () => {
+    setAddClicked(false);
+    setValues({ title: "", note: "" });
+    setClicked(false);
+  };
 
   const value = {
     tasks,
-    createTasks,
     deleteitem,
     editTask,
     clicked,
@@ -96,6 +68,8 @@ export const TaskProvider = ({ children }) => {
     values,
     setValues,
     handleChange,
+    createTask,
+    cancelCreate,
   };
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

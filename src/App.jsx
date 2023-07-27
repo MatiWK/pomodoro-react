@@ -9,8 +9,7 @@ import { useTask } from "./contexts/TaskContext";
 
 function App() {
   const { running, backgroundColor, taskColor } = useTimer();
-  // const [clicked, setClicked] = useContext(Clicked);
-  const { tasks, createTasks, editTask, deleteitem, clicked, setClicked } = useTask();
+  const { tasks, editTask, deleteitem, clicked, setClicked } = useTask(); 
 
   return (
     <>
@@ -92,8 +91,6 @@ function App() {
             </div>
           ) : (
             <AddTask
-              sendValues={createTasks}
-              cancelCreation={() => setClicked(false)}
             />
           )}
         </div>

@@ -1,24 +1,19 @@
 import { useContext } from "react";
-import {
-  Context,
-  Count,
-} from "../contexts/CounterContext";
+import { Context } from "../contexts/CounterContext";
 import { useTask } from "../contexts/TaskContext";
+import { IncrementButton } from "./IncrementButton";
+import { DecrementButton } from "./DecrementButton";
+import { InputCount } from "./InputCount";
 
-const AddTask = (props) => {
-  const [count, setCount] = useContext(Count);
-  //   const [addClicked, setAddClicked] = useContext(ClickedAddNote);
-  //   const [values, setValues] = useContext(Value);
+const AddTask = () => {
   const {
     addClicked,
     setAddClicked,
-    setClicked,
     values,
-    setValues,
     handleChange,
+    createTask,
+    cancelCreate,
   } = useTask();
-
-  const { title, note } = values;
 
   const value = useContext(Context);
 
@@ -36,47 +31,10 @@ const AddTask = (props) => {
           ></input>
           <h1 className="my-5 text-xl">Est Pomodoros {value}</h1>
           <div className="flex">
-            <input
-              placeholder={count}
-              type="number"
-              className="input-background px-2 py-1 rounded-lg"
-            ></input>
-            <button
-              type="button"
-              onClick={() => setCount(count + 1)}
-              className="ml-3"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-8 h-8 "
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </button>
-            <button type="button" onClick={() => setCount(count - 1)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-8 h-8 "
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </button>
+            <InputCount />
+
+            <IncrementButton />
+            <DecrementButton />
           </div>
           <div>
             {!addClicked ? (
@@ -107,24 +65,11 @@ const AddTask = (props) => {
             name="cancel"
             type="button"
             className="mx-2"
-            onClick={() => {
-              setAddClicked(false);
-              setValues({ title: "", note: "" });
-              props.cancelCreation();
-            }}
+            onClick={cancelCreate}
           >
             Cancel
           </button>
-          <button
-            name="save"
-            type="button"
-            onClick={() => {
-              props.sendValues(title, note);
-              setAddClicked(false);
-              setClicked(false);
-              setValues({ title: "", note: "" });
-            }}
-          >
+          <button name="save" type="button" onClick={createTask}>
             Save
           </button>
         </div>
