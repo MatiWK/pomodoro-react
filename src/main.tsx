@@ -12,8 +12,11 @@ import {
 } from "./contexts/CounterContext";
 import { TimerProvider } from "./contexts/TimerContext";
 import { TaskProvider } from "./contexts/TaskContext";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
+const root = document.getElementById("root");
+if(root === null) {
+  throw new Error(`root element missing`);
+}
+ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <CounterProvider>
       <BackgroundProvider>

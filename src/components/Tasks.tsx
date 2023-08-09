@@ -1,7 +1,14 @@
 import { useTask } from "../contexts/TaskContext";
+import TaskEdit from "./TaskEdit";
+type Props = {id: number, title: string, note: string}
+export const Task = ({ id, title, note }: Props) => {
+  console.log({ id, note, title });
+  const { currentlyEditedTaskId, updateTask, editTask, deleteTask } = useTask();
 
-export const Task = ({ id, title, note }) => {
-  const { deleteTask, editTask } = useTask();
+  const onDataReady = (title: string, note: string) => {
+    updateTask(id, title, note);
+    console.log("ondataready", { id, title, note });
+  };
 
   return (
     <div className="tasks text-black bg-white rounded-md py-3 ">
@@ -25,6 +32,11 @@ export const Task = ({ id, title, note }) => {
           <button type="button" className="mx-3" onClick={() => editTask(id)}>
             Edit
           </button>
+          {currentlyEditedTaskId === id ? (
+            <TaskEdit title={title} note={note} onDataReady={onDataReady} />
+          ) : (
+            <p>Task</p>
+          )}
           <button
             type="button"
             onClick={() => deleteTask(id)}

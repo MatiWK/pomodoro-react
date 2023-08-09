@@ -52,7 +52,7 @@ function App() {
               return (
                 <Task
                   key={index}
-                  id={index}
+                  id={task.id}
                   title={task.title}
                   note={task.note}
                   
