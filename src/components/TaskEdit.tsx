@@ -1,5 +1,7 @@
-const TaskEdit = ({ title, note, onDataReady }) => {
-  function handleSubmit(event) {
+type  Props  = {title: string, note: string, onDataReady: (title: string, note: string) => void}
+
+const TaskEdit = ({ title, note, onDataReady }: Props) => {
+  function handleSubmit(event: any) {
     event.preventDefault();
     onDataReady(event.target.title.value, event.target.note.value);
   }

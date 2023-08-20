@@ -10,7 +10,7 @@ export const modes = {
       shortbreak: false,
       longbreak: false
     },
-    pickNextMode: (howManyPomodorosElapsed) => {
+    pickNextMode: (howManyPomodorosElapsed: any) => {
       return howManyPomodorosElapsed < 4 ? modes.shortbreakTimer : modes.longbreakTimer;
     }
     // backgroundColor: 

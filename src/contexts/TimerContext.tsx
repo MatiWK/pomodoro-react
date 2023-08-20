@@ -1,4 +1,5 @@
 import {
+  PropsWithChildren,
   createContext,
   useCallback,
   useContext,
@@ -6,9 +7,28 @@ import {
   useState,
 } from "react";
 import { modes } from "./modes";
-import sound from "../assets/sound.mp3";
+// import sound from "../assets/sound.mp3";
 import { colorLinks } from "../components/colorLinks";
 import { IsRunning, Background, TaskColor, Running } from "./CounterContext";
+type ContextValue = {
+  time: number,
+  chosenTimer: {
+    pomodoro: boolean;
+    shortbreak: boolean;
+    longbreak: boolean;
+  },
+  backgroundColor: any,
+  taskColor: any,
+  running: any,
+  isRunning: any,
+  handlers: {
+    handleLongBreak: (e: any) => void;
+    handlePomodoro: (e: any) => void;
+    handleShortbreak: (e: any) => void;
+  },
+  restart: () => void,
+  toggle: () => void
+}
 
 // export const Time = React.createContext();
 // export const TimeProvider = ({children}) => {
@@ -21,8 +41,8 @@ import { IsRunning, Background, TaskColor, Running } from "./CounterContext";
 //     return <ChoosenTimer.Provider value={[chosenTimer, setChosenTimer]}>{children}</ChoosenTimer.Provider>
 // }
 const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
-export const TimerContext = createContext(null);
-export const TimerProvider = ({ children }) => {
+export const TimerContext = createContext<null | ContextValue>(null);
+export const TimerProvider = ({ children }: PropsWithChildren) => {
   const [time, setTime] = useState(pomodoroTimer.initialTime);
   const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
   const [isRunning, setIsRunning] = useContext(IsRunning);
@@ -32,7 +52,7 @@ export const TimerProvider = ({ children }) => {
   const [running, setRunning] = useContext(Running);
 
   const colorSwitch = useCallback(
-    (name) => {
+    (name: any) => {
       if (name === "Pomodoro") {
         setbackgroundColor("background-pomodoro");
         setTaskColor("taskbox-pomodoro");
@@ -47,14 +67,14 @@ export const TimerProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    let interval;
+    let interval: any;
 
     if (isRunning) {
       interval = setInterval(() => {
         if (time === 0) {
           setIsRunning(false);
 
-          new Audio(sound).play();
+          // new Audio(sound).play();
 
           if (pomodoro) {
             colorSwitch(colorLinks.break);
@@ -80,7 +100,7 @@ export const TimerProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, [time, isRunning, pomodoro, shortbreak, setIsRunning, colorSwitch]);
   // CHOOSING COUNTDOWN LOGIC
-  function handlePomodoro(e) {
+  function handlePomodoro(e: any) {
     e.preventDefault();
     // choses link to apply styling to
     setChosenTimer(pomodoroTimer.chooseTimer);
@@ -92,7 +112,7 @@ export const TimerProvider = ({ children }) => {
     colorSwitch(colorLinks.pomodoro);
   }
 
-  function handleShortbreak(e) {
+  function handleShortbreak(e: any) {
     e.preventDefault();
     setChosenTimer(shortbreakTimer.chooseTimer);
     setTime(shortbreakTimer.initialTime);
@@ -101,7 +121,7 @@ export const TimerProvider = ({ children }) => {
     colorSwitch(colorLinks.break);
   }
 
-  function handleLongBreak(e) {
+  function handleLongBreak(e: any) {
     e.preventDefault();
     setChosenTimer(longbreakTimer.chooseTimer);
     setTime(longbreakTimer.initialTime);
@@ -126,10 +146,10 @@ export const TimerProvider = ({ children }) => {
     setIsRunning(false);
   }
   function toggle() {
-    setIsRunning((prev) => !prev);
+    setIsRunning((prev: any) => !prev);
   }
 
-  const value = {
+  const value: ContextValue = {
     time,
     chosenTimer,
     backgroundColor,

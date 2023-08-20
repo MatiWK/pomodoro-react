@@ -1,15 +1,11 @@
 import { useContext } from "react";
 import { Count } from "../contexts/CounterContext";
 
-export const IncrementButton = () => {
+export const DecrementButton = () => {
   const [, setCount] = useContext(Count);
 
   return (
-    <button
-      type="button"
-      onClick={() => setCount((x) => x + 1)}
-      className="ml-3"
-    >
+    <button type="button" onClick={() => setCount((x: any) => x - 1)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -21,10 +17,9 @@ export const IncrementButton = () => {
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
     </button>
   );
 };
-
