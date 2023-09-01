@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { ChangeEventHandler, useContext } from "react";
 import { Context } from "../contexts/CounterContext";
 import { useTask } from "../contexts/TaskContext";
 import { IncrementButton } from "./IncrementButton";
@@ -16,6 +16,10 @@ const AddTask = () => {
   } = useTask();
 
   const value = useContext(Context);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
+    const { value, name } = event.target;
+    handleChange(value, name)
+  } 
 
   return (
     <div className="addtask-background addtask addtask-text-color font-bold rounded-xl ">
@@ -27,7 +31,7 @@ const AddTask = () => {
             value={values.title}
             name="title"
             className="text-2xl mt-3"
-            onChange={handleChange}
+            onChange={handleInputChange}
           ></input>
           <h1 className="my-5 text-xl">Est Pomodoros {value}</h1>
           <div className="flex">
@@ -50,7 +54,7 @@ const AddTask = () => {
               <textarea
                 value={values.note}
                 name="note"
-                onChange={handleChange}
+                onChange={handleInputChange}
                 className="textarea-background my-3 rounded-md font-light"
               ></textarea>
             )}

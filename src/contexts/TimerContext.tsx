@@ -9,7 +9,8 @@ import {
 import { modes } from "./modes";
 // import sound from "../assets/sound.mp3";
 import { colorLinks } from "../components/colorLinks";
-import { IsRunning, Background, TaskColor, Running } from "./CounterContext";
+import { IsRunning, Background, TaskColor, Running, useIsRunning, useBackground, useTaskColor, useRunning } from "./CounterContext";
+import { useTask } from "./TaskContext";
 type ContextValue = {
   time: number,
   chosenTimer: {
@@ -45,11 +46,11 @@ export const TimerContext = createContext<null | ContextValue>(null);
 export const TimerProvider = ({ children }: PropsWithChildren) => {
   const [time, setTime] = useState(pomodoroTimer.initialTime);
   const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
-  const [isRunning, setIsRunning] = useContext(IsRunning);
+  const [isRunning, setIsRunning] = useIsRunning();
   const { pomodoro, shortbreak } = chosenTimer;
-  const [backgroundColor, setbackgroundColor] = useContext(Background);
-  const [taskColor, setTaskColor] = useContext(TaskColor);
-  const [running, setRunning] = useContext(Running);
+  const [backgroundColor, setbackgroundColor] = useBackground();
+  const [taskColor, setTaskColor] = useTaskColor();
+  const [running, setRunning] = useRunning();
 
   const colorSwitch = useCallback(
     (name: any) => {

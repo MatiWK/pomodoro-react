@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { ChangeEventHandler, PropsWithChildren, createContext, useContext, useState } from "react";
 type Task = { title: string; note: string; id: number; exist: boolean };
 type ContextValue = {
   tasks: Task[];
@@ -17,7 +17,7 @@ type ContextValue = {
       note: string;
     }>
   >;
-  handleChange: React.ChangeEventHandler<HTMLInputElement>;
+  handleChange: (value: string, name: string) => void;
   createTask: () => void;
   cancelCreate: () => void;
   openTaskCreationForm: () => void;
@@ -63,8 +63,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     setCurrentlyEditedTaskId(id);
   }
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value, name } = event.target;
+  const handleChange = (value: string, name: string) => {
 
     setValues((prev) => {
       return {
@@ -110,7 +109,7 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
     setAddClicked,
     values,
     setValues,
-    handleChange,
+    handleChange: handleChange,
     createTask,
     cancelCreate,
     openTaskCreationForm,
