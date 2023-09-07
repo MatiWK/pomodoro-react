@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { Count } from "../contexts/CounterContext";
+import { useAtom } from "jotai";
+import { countAtom } from "../atoms/count-atom";
 
 export const DecrementButton = () => {
-  const [, setCount] = useContext(Count);
+  const [, setCount] = useAtom(countAtom);
 
   return (
     <button type="button" onClick={() => setCount((x: any) => x - 1)}>

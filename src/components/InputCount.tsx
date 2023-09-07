@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { Count } from "../contexts/CounterContext";
+import { useAtom } from "jotai";
+import { countAtom } from "../atoms/count-atom";
 
 export const InputCount = () => {
-  const [count] = useContext(Count);
+  const [count, ] = useAtom(countAtom);
 
   return (
     <input
-      placeholder={count}
+      placeholder={String(count)}
       type="number"
       className="input-background px-2 py-1 rounded-lg"
     />

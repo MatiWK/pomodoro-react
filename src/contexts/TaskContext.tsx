@@ -1,11 +1,11 @@
 import { useAtom } from "jotai";
-import { ChangeEventHandler, PropsWithChildren, createContext, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 import { taskCreationActiveAtom } from "../atoms/task-creation-active-atom";
 import { addClickedAtom } from "../atoms/add-clicked-atom";
 import { valuesAtom } from "../atoms/values-atom";
-type Task = { title: string; note: string; id: number; exist: boolean };
+import { taskAtom } from "../atoms/tasks-atom";
+import { currentlyEditedTaskIdAtom } from "../atoms/currently-edited-task-id";
 type ContextValue = {
-  tasks: Task[];
   deleteTask: (id: number) => void;
   editTask: (id: number) => void;
   clicked: boolean;
@@ -30,13 +30,12 @@ type ContextValue = {
 };
 export const TaskContext = createContext<null | ContextValue>(null);
 export const TaskProvider = ({ children }: PropsWithChildren) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useAtom(taskAtom)
+  
   const [taskCreationActive, setTaskCreationActive] = useAtom(taskCreationActiveAtom)
   const [addClicked, setAddClicked] = useAtom(addClickedAtom)
   const [values, setValues] = useAtom(valuesAtom);
-  const [currentlyEditedTaskId, setCurrentlyEditedTaskId] = useState<
-    null | number
-  >(null);
+  const [currentlyEditedTaskId, setCurrentlyEditedTaskId] = useAtom(currentlyEditedTaskIdAtom);
 
   const openTaskCreationForm = () => {
     setTaskCreationActive(true);
@@ -102,7 +101,6 @@ export const TaskProvider = ({ children }: PropsWithChildren) => {
   };
 
   const value: ContextValue = {
-    tasks,
     deleteTask,
     editTask,
     clicked: taskCreationActive,

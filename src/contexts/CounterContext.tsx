@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useContext, useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 
 export const Context = React.createContext(10);
 export const CounterProvider = ({ children }: PropsWithChildren) => {

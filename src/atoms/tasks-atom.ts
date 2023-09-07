@@ -1,3 +1,6 @@
 import { atom } from "jotai";
 
-export const taskAtom = atom([]);
+type Task = { title: string; note: string; id: number; exist: boolean };
+
+
+export const taskAtom = atom<Task[]>([]);
