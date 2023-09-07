@@ -1,4 +1,8 @@
+import { useAtom } from "jotai";
 import { ChangeEventHandler, PropsWithChildren, createContext, useContext, useState } from "react";
+import { taskCreationActiveAtom } from "../atoms/task-creation-active-atom";
+import { addClickedAtom } from "../atoms/add-clicked-atom";
+import { valuesAtom } from "../atoms/values-atom";
 type Task = { title: string; note: string; id: number; exist: boolean };
 type ContextValue = {
   tasks: Task[];
@@ -27,12 +31,9 @@ type ContextValue = {
 export const TaskContext = createContext<null | ContextValue>(null);
 export const TaskProvider = ({ children }: PropsWithChildren) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [taskCreationActive, setTaskCreationActive] = useState(false);
-  const [addClicked, setAddClicked] = useState(false);
-  const [values, setValues] = useState({
-    title: "",
-    note: "",
-  });
+  const [taskCreationActive, setTaskCreationActive] = useAtom(taskCreationActiveAtom)
+  const [addClicked, setAddClicked] = useAtom(addClickedAtom)
+  const [values, setValues] = useAtom(valuesAtom);
   const [currentlyEditedTaskId, setCurrentlyEditedTaskId] = useState<
     null | number
   >(null);

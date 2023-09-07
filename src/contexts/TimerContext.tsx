@@ -4,13 +4,19 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
 } from "react";
 import { modes } from "./modes";
 // import sound from "../assets/sound.mp3";
 import { colorLinks } from "../components/colorLinks";
-import { IsRunning, Background, TaskColor, Running, useIsRunning, useBackground, useTaskColor, useRunning } from "./CounterContext";
-import { useTask } from "./TaskContext";
+
+import { useAtom } from "jotai";
+import { isRunningAtom } from "../atoms/is-running-atom";
+import { taskColorAtom } from "../atoms/rask-color-atom";
+import { backgroundAtom } from "../atoms/background-atom";
+import { runningAtom } from "../atoms/running-atom";
+import { timeAtom } from "../atoms/time-atom";
+import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
+
 type ContextValue = {
   time: number,
   chosenTimer: {
@@ -44,13 +50,14 @@ type ContextValue = {
 const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
 export const TimerContext = createContext<null | ContextValue>(null);
 export const TimerProvider = ({ children }: PropsWithChildren) => {
-  const [time, setTime] = useState(pomodoroTimer.initialTime);
-  const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
-  const [isRunning, setIsRunning] = useIsRunning();
+  const [time, setTime] = useAtom(timeAtom);
+  const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
+  // const [isRunning, setIsRunning] = useIsRunning();
+  const [isRunning, setIsRunning] = useAtom(isRunningAtom)
   const { pomodoro, shortbreak } = chosenTimer;
-  const [backgroundColor, setbackgroundColor] = useBackground();
-  const [taskColor, setTaskColor] = useTaskColor();
-  const [running, setRunning] = useRunning();
+  const [backgroundColor, setbackgroundColor] = useAtom(backgroundAtom);
+  const [taskColor, setTaskColor] = useAtom(taskColorAtom);
+  const [running, setRunning] = useAtom(runningAtom);
 
   const colorSwitch = useCallback(
     (name: any) => {
@@ -102,7 +109,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   }, [time, isRunning, pomodoro, shortbreak, setIsRunning, colorSwitch]);
   // CHOOSING COUNTDOWN LOGIC
   function handlePomodoro(e: any) {
-    e.preventDefault();
+    e.preventDefault(); 
     // choses link to apply styling to
     setChosenTimer(pomodoroTimer.chooseTimer);
     // sets time according to the selected one

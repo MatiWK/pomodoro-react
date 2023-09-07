@@ -4,11 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import {
   CounterProvider,
-  BackgroundProvider,
-  TaskColorProvider,
-  RunningProvider,
   CountProvider,
-  IsRunningProvider,
 } from "./contexts/CounterContext";
 import { TimerProvider } from "./contexts/TimerContext";
 import { TaskProvider } from "./contexts/TaskContext";
@@ -19,21 +15,13 @@ if(root === null) {
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
     <CounterProvider>
-      <BackgroundProvider>
-        <TaskColorProvider>
-          <RunningProvider>
               <CountProvider>
-                <IsRunningProvider>
                   <TimerProvider>
                     <TaskProvider>
                       <App />
                     </TaskProvider>
                   </TimerProvider>
-                </IsRunningProvider>
               </CountProvider>
-          </RunningProvider>
-        </TaskColorProvider>
-      </BackgroundProvider>
     </CounterProvider>
   </React.StrictMode>
 );
