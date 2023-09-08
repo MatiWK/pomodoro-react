@@ -1,42 +1,32 @@
 import { pomodoroLength, shortbreakLength, longbreakLength } from "./constants";
-
+type ModeName = "shortbreakTimer" | "longbreakTimer" | "pomodoroTimer"
 // MODES
 export const modes = {
   pomodoroTimer: {
     initialTime: pomodoroLength,
     label: "Pomodoro",
-    chooseTimer: {
-      pomodoro: true,
-      shortbreak: false,
-      longbreak: false
+    pickNextMode: (howManyPomodorosElapsed: any): ModeName => {
+      return howManyPomodorosElapsed < 4 ? "shortbreakTimer" : "longbreakTimer";
     },
-    pickNextMode: (howManyPomodorosElapsed: any) => {
-      return howManyPomodorosElapsed < 4 ? modes.shortbreakTimer : modes.longbreakTimer;
-    }
-    // backgroundColor: 
+    backgroundClassName: "background-pomodoro",
+    taskColorClassName: "taskbox-pomodoro"
   },
   shortbreakTimer: {
     initialTime: shortbreakLength,
     label: "Short Break",
-    chooseTimer: {
-      pomodoro: false,
-      shortbreak: true,
-      longbreak: false
+    pickNextMode: (): ModeName => {
+      return "pomodoroTimer";
     },
-    pickNextMode: () => {
-      return modes.pomodoroTimer;
-    }
+    backgroundClassName: "background-break",
+    taskColorClassName: "taskbox-break"
   },
   longbreakTimer: {
     initialTime: longbreakLength,
     label: "Long Break",
-    chooseTimer: {
-      pomodoro: false,
-      shortbreak: false,
-      longbreak: true
+    pickNextMode: (): ModeName => {
+      return "pomodoroTimer";
     },
-    pickNextMode: () => {
-      return modes.pomodoroTimer;
-    }
+    backgroundClassName: "background-break",
+    taskColorClassName: "taskbox-break"
   }
 };

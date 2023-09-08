@@ -1,4 +1,4 @@
 import { atom } from "jotai";
 import { modes } from "../contexts/modes";
 
-export const chosenTimerAtom = atom<keyof typeof modes>("pomodoroTimer")
+export const modeAtom = atom<keyof typeof modes>("pomodoroTimer");

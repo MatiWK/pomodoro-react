@@ -16,14 +16,11 @@ import { backgroundAtom } from "../atoms/background-atom";
 import { runningAtom } from "../atoms/running-atom";
 import { timeAtom } from "../atoms/time-atom";
 import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
+import { modeAtom } from "../atoms/mode-atom";
 
 type ContextValue = {
   time: number,
-  chosenTimer: {
-    pomodoro: boolean;
-    shortbreak: boolean;
-    longbreak: boolean;
-  },
+  chosenTimer: keyof typeof modes,
   backgroundColor: any,
   taskColor: any,
   running: any,
@@ -37,42 +34,35 @@ type ContextValue = {
   toggle: () => void
 }
 
-// export const Time = React.createContext();
-// export const TimeProvider = ({children}) => {
-//     const [time, setTime] = useState(pomodoroTimer.initialTime)
-//     return <Time.Provider value={[time, setTime]}>{children}</Time.Provider>
-// }
-// export const ChoosenTimer = React.createContext();
-// export const ChoosenTimerProvider = ({children}) => {
-//     const [chosenTimer, setChosenTimer] = useState(pomodoroTimer.chooseTimer);
-//     return <ChoosenTimer.Provider value={[chosenTimer, setChosenTimer]}>{children}</ChoosenTimer.Provider>
-// }
-const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
-export const TimerContext = createContext<null | ContextValue>(null);
-export const TimerProvider = ({ children }: PropsWithChildren) => {
+  const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
+  export const TimerContext = createContext<null | ContextValue>(null);
+  export const TimerProvider = ({ children }: PropsWithChildren) => {
   const [time, setTime] = useAtom(timeAtom);
   const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
-  // const [isRunning, setIsRunning] = useIsRunning();
   const [isRunning, setIsRunning] = useAtom(isRunningAtom)
-  const { pomodoro, shortbreak } = chosenTimer;
-  const [backgroundColor, setbackgroundColor] = useAtom(backgroundAtom);
-  const [taskColor, setTaskColor] = useAtom(taskColorAtom);
   const [running, setRunning] = useAtom(runningAtom);
+  const [mode, setMode] = useAtom(modeAtom);
 
   const colorSwitch = useCallback(
     (name: any) => {
       if (name === "Pomodoro") {
-        setbackgroundColor("background-pomodoro");
-        setTaskColor("taskbox-pomodoro");
         setRunning(true);
       } else {
-        setbackgroundColor("background-break");
-        setTaskColor("taskbox-break");
         setRunning(false);
       }
     },
-    [setRunning, setTaskColor, setbackgroundColor]
+    [setRunning]
   );
+
+  const takeNextTimer = () => {
+    const timer = modes[chosenTimer]
+    const nextTimerName = timer.pickNextMode(1);
+    const nextTimer = modes[nextTimerName];
+    setChosenTimer(nextTimerName)
+    setTime(nextTimer.initialTime);
+    setIsRunning(false);
+
+  }
 
   useEffect(() => {
     let interval: any;
@@ -80,23 +70,10 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
     if (isRunning) {
       interval = setInterval(() => {
         if (time === 0) {
-          setIsRunning(false);
 
           // new Audio(sound).play();
-
-          if (pomodoro) {
-            colorSwitch(colorLinks.break);
-            setTime(shortbreakTimer.initialTime);
-            setChosenTimer(shortbreakTimer.chooseTimer);
-          } else if (shortbreak) {
-            colorSwitch(colorLinks.pomodoro);
-            setTime(pomodoroTimer.initialTime);
-            setChosenTimer(pomodoroTimer.chooseTimer);
-          } else {
-            colorSwitch(colorLinks.pomodoro);
-            setTime(pomodoroTimer.initialTime);
-            setChosenTimer(pomodoroTimer.chooseTimer);
-          }
+          takeNextTimer();
+          
         } else {
           setTime(time - 1);
         }
@@ -106,12 +83,12 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
     }
 
     return () => clearInterval(interval);
-  }, [time, isRunning, pomodoro, shortbreak, setIsRunning, colorSwitch]);
+  }, [time, isRunning,  setIsRunning, colorSwitch, takeNextTimer]);
   // CHOOSING COUNTDOWN LOGIC
   function handlePomodoro(e: any) {
     e.preventDefault(); 
     // choses link to apply styling to
-    setChosenTimer(pomodoroTimer.chooseTimer);
+    setChosenTimer("pomodoroTimer");
     // sets time according to the selected one
     setTime(pomodoroTimer.initialTime);
     setIsRunning(false);
@@ -122,7 +99,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
 
   function handleShortbreak(e: any) {
     e.preventDefault();
-    setChosenTimer(shortbreakTimer.chooseTimer);
+    setChosenTimer("shortbreakTimer");
     setTime(shortbreakTimer.initialTime);
     setIsRunning(false);
 
@@ -131,28 +108,13 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
 
   function handleLongBreak(e: any) {
     e.preventDefault();
-    setChosenTimer(longbreakTimer.chooseTimer);
+    setChosenTimer("longbreakTimer");
     setTime(longbreakTimer.initialTime);
     setIsRunning(false);
 
     colorSwitch(colorLinks.break);
   }
-  function restart() {
-    if (pomodoro) {
-      setTime(shortbreakTimer.initialTime);
-      setChosenTimer(shortbreakTimer.chooseTimer);
-      colorSwitch(colorLinks.break);
-    } else if (shortbreak) {
-      setTime(pomodoroTimer.initialTime);
-      setChosenTimer(pomodoroTimer.chooseTimer);
-      colorSwitch(colorLinks.pomodoro);
-    } else {
-      setTime(pomodoroTimer.initialTime);
-      setChosenTimer(pomodoroTimer.chooseTimer);
-      colorSwitch(colorLinks.pomodoro);
-    }
-    setIsRunning(false);
-  }
+  
   function toggle() {
     setIsRunning((prev: any) => !prev);
   }
@@ -160,8 +122,8 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   const value: ContextValue = {
     time,
     chosenTimer,
-    backgroundColor,
-    taskColor,
+    backgroundColor: modes[chosenTimer].backgroundClassName,
+    taskColor: modes[chosenTimer].taskColorClassName,
     running,
     isRunning,
     handlers: {
@@ -169,7 +131,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
       handlePomodoro,
       handleShortbreak,
     },
-    restart,
+    restart: takeNextTimer,
     toggle,
   };
 

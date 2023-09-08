@@ -6,13 +6,13 @@ import AddTask from "./components/AddTask";
 import { Task } from "./components/Tasks";
 import { useTimer } from "./contexts/TimerContext";
 import { useTask } from "./contexts/TaskContext";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { taskAtom } from "./atoms/tasks-atom";
 
 function App() {
   const { running, backgroundColor, taskColor } = useTimer();
   const {  clicked, openTaskCreationForm } = useTask(); 
-  const [tasks, setTasks] = useAtom(taskAtom)
+  const tasks = useAtomValue(taskAtom)
 
   return (
     <>

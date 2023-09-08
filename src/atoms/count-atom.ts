@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const countAtom = atom(Number(1))
+export const countAtom = atom(1)
