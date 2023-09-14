@@ -5,14 +5,16 @@ import Timer from "./components/Timer";
 import AddTask from "./components/AddTask";
 import { Task } from "./components/Tasks";
 import { useTimer } from "./contexts/TimerContext";
-import { useTask } from "./contexts/TaskContext";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { taskAtom } from "./atoms/tasks-atom";
+import { taskCreationActiveAtom } from "./atoms/task-creation-active-atom";
 
 function App() {
   const { running, backgroundColor, taskColor } = useTimer();
-  const {  clicked, openTaskCreationForm } = useTask(); 
+  const clicked = useAtomValue(taskCreationActiveAtom)
   const tasks = useAtomValue(taskAtom)
+  const setTaskCreationActive = useSetAtom(taskCreationActiveAtom);
+
 
   return (
     <>
@@ -86,7 +88,7 @@ function App() {
                     d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <button onClick={openTaskCreationForm} className="mx-2">
+                <button onClick={() => setTaskCreationActive(true)} className="mx-2">
                   Add Task
                 </button>
               </div>

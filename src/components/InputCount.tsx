@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { Count } from "../contexts/CounterContext";
 import { useAtom } from "jotai";
 import { countAtom } from "../atoms/count-atom";
 

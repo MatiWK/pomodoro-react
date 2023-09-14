@@ -6,17 +6,13 @@ import {
   useEffect,
 } from "react";
 import { modes } from "./modes";
-// import sound from "../assets/sound.mp3";
 import { colorLinks } from "../components/colorLinks";
 
 import { useAtom } from "jotai";
 import { isRunningAtom } from "../atoms/is-running-atom";
-import { taskColorAtom } from "../atoms/rask-color-atom";
-import { backgroundAtom } from "../atoms/background-atom";
 import { runningAtom } from "../atoms/running-atom";
 import { timeAtom } from "../atoms/time-atom";
 import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
-import { modeAtom } from "../atoms/mode-atom";
 
 type ContextValue = {
   time: number,
@@ -41,7 +37,6 @@ type ContextValue = {
   const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
   const [isRunning, setIsRunning] = useAtom(isRunningAtom)
   const [running, setRunning] = useAtom(runningAtom);
-  const [mode, setMode] = useAtom(modeAtom);
 
   const colorSwitch = useCallback(
     (name: any) => {
