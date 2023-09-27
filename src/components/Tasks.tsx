@@ -18,6 +18,7 @@ export const Task = ({ id, title, note }: Props) => {
       {currentlyEditedTaskId === id ? (
         <TaskEdit title={title} note={note} onDataReady={onDataReady} />
       ) : (
+        <div>
         <div className="flex ml-4 justify-between">
           <div className="flex">
             <svg
@@ -59,8 +60,10 @@ export const Task = ({ id, title, note }: Props) => {
             </button>
           </div>
         </div>
+        <h1 className="mt-5 mx-7 background-note px-2 py-3 rounded-md">{note}</h1>
+
+        </div>
       )}
-      <h1 className="mt-5 mx-7 background-note px-2 py-3 rounded-md">{note}</h1>
     </div>
   );
 };
