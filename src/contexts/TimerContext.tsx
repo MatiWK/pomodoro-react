@@ -7,7 +7,6 @@ import {
 } from "react";
 import { modes } from "./modes";
 import { colorLinks } from "../components/colorLinks";
-
 import { useAtom } from "jotai";
 import { isRunningAtom } from "../atoms/is-running-atom";
 import { runningAtom } from "../atoms/running-atom";
