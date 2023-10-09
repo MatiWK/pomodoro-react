@@ -1,9 +1,12 @@
 import TimerButtons from "./TimerButtons";
 import { useTimer } from "../contexts/TimerContext";
 import { formatTime } from "./formatTime";
+import { useAtomValue } from "jotai";
+import { timeAtom } from "../atoms/time-atom";
 
 const Timer = () => {
-  const { time, restart, isRunning, toggle } = useTimer();
+  const { restart, isRunning, toggle } = useTimer();
+  const time = useAtomValue(timeAtom); 
 
   return (
     <div>

@@ -8,9 +8,10 @@ import { useTimer } from "./contexts/TimerContext";
 import { useAtomValue, useSetAtom } from "jotai";
 import { taskAtom } from "./atoms/tasks-atom";
 import { taskCreationActiveAtom } from "./atoms/task-creation-active-atom";
+import { HintDisplay } from "./components/HintDisplay";
 
 function App() {
-  const { running, backgroundColor, taskColor } = useTimer();
+  const { backgroundColor, taskColor } = useTimer();
   const clicked = useAtomValue(taskCreationActiveAtom)
   const tasks = useAtomValue(taskAtom)
   const setTaskCreationActive = useSetAtom(taskCreationActiveAtom);
@@ -30,7 +31,7 @@ function App() {
           </div>
           <div className="text-center text-xl">
             <p className="mt-3">#1</p>
-            {running ? <p>Time to focus!</p> : <p>Time for a Break! </p>}
+            <HintDisplay />
           </div>
           <div className="flex justify-between timer-div">
             <p>Tasks</p>
