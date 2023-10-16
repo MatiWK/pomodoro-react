@@ -1,5 +1,4 @@
-import { useSetAtom } from "jotai";
-import { useTimer } from "../contexts/TimerContext";
+import { useAtom, useSetAtom } from "jotai";
 import { LONG_BREAK, POMODORO, SHORT_BREAK, modes } from "../contexts/modes";
 import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
 import { timeAtom } from "../atoms/time-atom";
@@ -15,11 +14,11 @@ const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
 
 
 const TimerButtons = () => {
-  const { chosenTimer } = useTimer();
-  const setChosenTimer = useSetAtom(chosenTimerAtom)
   const setTime = useSetAtom(timeAtom);
   const setIsRunning = useSetAtom(isRunningAtom);
   const colorSwitch = useColorSwitch();
+  const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
+
 
 
 

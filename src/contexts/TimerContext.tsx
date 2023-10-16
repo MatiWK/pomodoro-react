@@ -12,7 +12,6 @@ import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
 import { useColorSwitch } from "../hooks/use-color-switch";
 
 type ContextValue = {
-  chosenTimer: keyof typeof modes;
   backgroundColor: any;
   taskColor: any;
   isRunning: any;
@@ -73,7 +72,6 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   }
 
   const value: ContextValue = {
-    chosenTimer,
     backgroundColor: modes[chosenTimer].backgroundClassName,
     taskColor: modes[chosenTimer].taskColorClassName,
     isRunning,
