@@ -1,5 +1,5 @@
 import { useTimer } from "../contexts/TimerContext";
-import { modes } from "../contexts/modes";
+import { LONG_BREAK, POMODORO, SHORT_BREAK, modes } from "../contexts/modes";
 
 const inactiveButton = "mx-3";
 const activeButton =
@@ -9,25 +9,28 @@ const labels = modes;
 const TimerButtons = () => {
   const { chosenTimer, handlers } = useTimer();
 
+  
+
+
   return (
     <div className=" my-3 py-3">
       <a
-        href={labels.pomodoroTimer.label}
-        className={chosenTimer === "pomodoroTimer" ? activeButton : inactiveButton}
+        href={labels[POMODORO].label}
+        className={chosenTimer === POMODORO ? activeButton : inactiveButton}
         onClick={handlers.handlePomodoro}
       >
         Pomodoro
       </a>
       <a
-        href={labels.shortbreakTimer.label}
-        className={chosenTimer === "shortbreakTimer" ? activeButton : inactiveButton}
+        href={labels[SHORT_BREAK].label}
+        className={chosenTimer === SHORT_BREAK ? activeButton : inactiveButton}
         onClick={handlers.handleShortbreak}
       >
         Short Break
       </a>
       <a
-        href={labels.longbreakTimer.label}
-        className={chosenTimer === "longbreakTimer" ? activeButton : inactiveButton}
+        href={labels[LONG_BREAK].label}
+        className={chosenTimer === LONG_BREAK ? activeButton : inactiveButton}
         onClick={handlers.handleLongBreak}
       >
         Long Break
