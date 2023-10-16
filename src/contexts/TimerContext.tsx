@@ -62,6 +62,8 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
   const [isRunning, setIsRunning] = useAtom(isRunningAtom);
 
+ 
+
 
   const colorSwitch = useColorSwitch();
 

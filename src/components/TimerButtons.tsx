@@ -1,8 +1,4 @@
-import { useAtom, useSetAtom } from "jotai";
 import { LONG_BREAK, POMODORO, SHORT_BREAK, modes } from "../contexts/modes";
-import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
-import { timeAtom } from "../atoms/time-atom";
-import { isRunningAtom } from "../atoms/is-running-atom";
 import { useColorSwitch } from "../hooks/use-color-switch";
 import { colorLinks } from "./colorLinks";
 import { useTimer } from "../contexts/TimerContext";
@@ -15,18 +11,17 @@ const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
 
 
 const TimerButtons = () => {
+  const {setChosenTimer, setTime, setIsRunning, chosenTimer} = useTimer();
   const colorSwitch = useColorSwitch();
 
-  const {setTime, setIsRunning, chosenTimer, setChosenTimer} = useTimer();
-
-  const handleTimer = (e: React.MouseEvent<HTMLElement>, timer: string, initialTime: number, color: string) => {
+  const handleTimer = (e: React.MouseEvent<HTMLElement>, timer: keyof typeof modes, initialTime: number, color: string) => {
     e.preventDefault();
     setChosenTimer(timer);
     setTime(initialTime);
     setIsRunning(false);
     colorSwitch(color);
   }
-
+  
   return (
     <div className=" my-3 py-3">
       <a
