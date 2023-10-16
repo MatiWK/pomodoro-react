@@ -11,12 +11,18 @@ import { timeAtom } from "../atoms/time-atom";
 import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
 import { useColorSwitch } from "../hooks/use-color-switch";
 
+
+
 type ContextValue = {
   backgroundColor: any;
   taskColor: any;
   isRunning: any;
   restart: () => void;
   toggle: () => void;
+  setIsRunning: any;
+  setTime: any;
+  chosenTimer: any;
+  setChosenTimer: any
 };
 
 const TimerRunner = ({
@@ -28,6 +34,8 @@ const TimerRunner = ({
 }) => {
   const [time, setTime] = useAtom(timeAtom);
   const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+
+  
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
@@ -53,7 +61,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   const setTime = useSetAtom(timeAtom);
   const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
   const [isRunning, setIsRunning] = useAtom(isRunningAtom);
-  
+
 
   const colorSwitch = useColorSwitch();
 
@@ -77,6 +85,10 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
     isRunning,
     restart: takeNextTimer,
     toggle,
+    setIsRunning,
+    setTime,
+    chosenTimer,
+    setChosenTimer
   };
 
   return (

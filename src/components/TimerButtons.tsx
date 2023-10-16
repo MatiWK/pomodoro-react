@@ -5,6 +5,7 @@ import { timeAtom } from "../atoms/time-atom";
 import { isRunningAtom } from "../atoms/is-running-atom";
 import { useColorSwitch } from "../hooks/use-color-switch";
 import { colorLinks } from "./colorLinks";
+import { useTimer } from "../contexts/TimerContext";
 
 const inactiveButton = "mx-3";
 const activeButton =
@@ -14,14 +15,9 @@ const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
 
 
 const TimerButtons = () => {
-  const setTime = useSetAtom(timeAtom);
-  const setIsRunning = useSetAtom(isRunningAtom);
   const colorSwitch = useColorSwitch();
-  const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
 
-
-
-
+  const {setTime, setIsRunning, chosenTimer, setChosenTimer} = useTimer();
 
   function handlePomodoro(e: any) {
     e.preventDefault();
