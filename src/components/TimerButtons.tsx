@@ -19,58 +19,35 @@ const TimerButtons = () => {
 
   const {setTime, setIsRunning, chosenTimer, setChosenTimer} = useTimer();
 
-  function handlePomodoro(e: any) {
+  const handleTimer = (e: React.MouseEvent<HTMLElement>, timer: string, initialTime: number, color: string) => {
     e.preventDefault();
-    // choses link to apply styling to
-    setChosenTimer("pomodoroTimer");
-    // sets time according to the selected one
-    setTime(pomodoroTimer.initialTime);
+    setChosenTimer(timer);
+    setTime(initialTime);
     setIsRunning(false);
-
-    // sends chosen link to app.jsx
-    colorSwitch(colorLinks.pomodoro);
+    colorSwitch(color);
   }
-
-  function handleShortbreak(e: any) {
-    e.preventDefault();
-    setChosenTimer("shortbreakTimer");
-    setTime(shortbreakTimer.initialTime);
-    setIsRunning(false);
-
-    colorSwitch(colorLinks.break);
-  }
-
-  function handleLongBreak(e: any) {
-    e.preventDefault();
-    setChosenTimer("longbreakTimer");
-    setTime(longbreakTimer.initialTime);
-    setIsRunning(false);
-
-    colorSwitch(colorLinks.break);
-  }
-  
-
 
   return (
     <div className=" my-3 py-3">
       <a
         href={labels[POMODORO].label}
         className={chosenTimer === POMODORO ? activeButton : inactiveButton}
-        onClick={handlePomodoro}
+        onClick={(e) => handleTimer(e, POMODORO, pomodoroTimer.initialTime, colorLinks.pomodoro)}
       >
         Pomodoro
       </a>
       <a
         href={labels[SHORT_BREAK].label}
         className={chosenTimer === SHORT_BREAK ? activeButton : inactiveButton}
-        onClick={handleShortbreak}
+        onClick={(e) => handleTimer(e, SHORT_BREAK, shortbreakTimer.initialTime, colorLinks.break)}
+
       >
         Short Break
       </a>
       <a
         href={labels[LONG_BREAK].label}
         className={chosenTimer === LONG_BREAK ? activeButton : inactiveButton}
-        onClick={handleLongBreak}
+        onClick={(e) => handleTimer(e, LONG_BREAK, longbreakTimer.initialTime, colorLinks.break)}
       >
         Long Break
       </a>
