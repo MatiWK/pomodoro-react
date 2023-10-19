@@ -1,48 +1,46 @@
 import { LONG_BREAK, POMODORO, SHORT_BREAK, modes } from "../contexts/modes";
-import { useColorSwitch } from "../hooks/use-color-switch";
-import { colorLinks } from "./colorLinks";
 import { useTimer } from "../contexts/TimerContext";
 
 const inactiveButton = "mx-3";
 const activeButton =
   inactiveButton + " transparent-background px-2 py-1 rounded-lg";
-const labels = modes;
-const { pomodoroTimer, shortbreakTimer, longbreakTimer } = modes;
 
 
 const TimerButtons = () => {
   const {setChosenTimer, setTime, setIsRunning, chosenTimer} = useTimer();
-  const colorSwitch = useColorSwitch();
 
-  const handleTimer = (e: React.MouseEvent<HTMLElement>, timer: keyof typeof modes, initialTime: number, color: string) => {
+  const makeHandle = (timer: keyof typeof modes) => (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setChosenTimer(timer);
-    setTime(initialTime);
+    setTime(modes[timer].initialTime);
     setIsRunning(false);
-    colorSwitch(color);
   }
-  
+
+  const handlePomodoro = makeHandle(POMODORO);
+  const handleShortBreak = makeHandle(SHORT_BREAK)
+  const handleLongBreak = makeHandle(LONG_BREAK)
+
   return (
     <div className=" my-3 py-3">
       <a
-        href={labels[POMODORO].label}
+        href={modes[POMODORO].label}
         className={chosenTimer === POMODORO ? activeButton : inactiveButton}
-        onClick={(e) => handleTimer(e, POMODORO, pomodoroTimer.initialTime, colorLinks.pomodoro)}
+        onClick={handlePomodoro}
       >
         Pomodoro
       </a>
       <a
-        href={labels[SHORT_BREAK].label}
+        href={modes[SHORT_BREAK].label}
         className={chosenTimer === SHORT_BREAK ? activeButton : inactiveButton}
-        onClick={(e) => handleTimer(e, SHORT_BREAK, shortbreakTimer.initialTime, colorLinks.break)}
+        onClick={handleShortBreak}
 
       >
         Short Break
       </a>
       <a
-        href={labels[LONG_BREAK].label}
+        href={modes[LONG_BREAK].label}
         className={chosenTimer === LONG_BREAK ? activeButton : inactiveButton}
-        onClick={(e) => handleTimer(e, LONG_BREAK, longbreakTimer.initialTime, colorLinks.break)}
+        onClick={handleLongBreak}
       >
         Long Break
       </a>

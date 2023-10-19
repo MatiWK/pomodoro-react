@@ -9,11 +9,10 @@ export const useUpdateTask = () => {
     return useCallback((id: number, title: string, note: string) => {
         setTasks((tasks) => {
           const result = tasks.map((task) => {
-            console.log({ task, id, title, note });
             return task.id === id ? { ...task, title, note } : task;
           });
           return result;
         });
         setCurrentlyEditedTaskId(null);
-      }, [])
+      }, [setCurrentlyEditedTaskId, setTasks])
 }

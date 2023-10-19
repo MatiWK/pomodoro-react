@@ -9,28 +9,25 @@ import { useAtom, useSetAtom } from "jotai";
 import { isRunningAtom } from "../atoms/is-running-atom";
 import { timeAtom } from "../atoms/time-atom";
 import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
-import { useColorSwitch } from "../hooks/use-color-switch";
 
 
 
 type ContextValue = {
-  backgroundColor: any;
-  taskColor: any;
-  isRunning: any;
+  backgroundColor: string;
+  taskColor: string;
+  isRunning: boolean;
   restart: () => void;
   toggle: () => void;
-  setIsRunning: any;
-  setTime: any;
-  chosenTimer: any;
-  setChosenTimer: any
+  setIsRunning: (value: boolean) => void;
+  setTime: (value: number) => void;
+  chosenTimer: keyof typeof modes;
+  setChosenTimer: (value: keyof typeof modes) => void
 };
 
 const TimerRunner = ({
   takeNextTimer,
-  colorSwitch,
 }: {
   takeNextTimer: () => void;
-  colorSwitch: (name: any) => void;
 }) => {
   const [time, setTime] = useAtom(timeAtom);
   const [isRunning, setIsRunning] = useAtom(isRunningAtom);
@@ -51,7 +48,7 @@ const TimerRunner = ({
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [time, isRunning, setIsRunning, colorSwitch, takeNextTimer]);
+  }, [time, isRunning, setIsRunning, takeNextTimer]);
 
   return null;
 };
@@ -65,7 +62,6 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
  
 
 
-  const colorSwitch = useColorSwitch();
 
   const takeNextTimer = () => {
     const timer = modes[chosenTimer];
@@ -78,7 +74,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
 
 
   function toggle() {
-    setIsRunning((prev: any) => !prev);
+    setIsRunning((prev: boolean) => !prev);
   }
 
   const value: ContextValue = {
@@ -95,7 +91,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <TimerContext.Provider value={value}>
-      <TimerRunner takeNextTimer={takeNextTimer} colorSwitch={colorSwitch} />
+      <TimerRunner takeNextTimer={takeNextTimer}  />
       {children}
     </TimerContext.Provider>
   );

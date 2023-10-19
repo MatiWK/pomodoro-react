@@ -1,6 +1,5 @@
-import { useAtom, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { PropsWithChildren, createContext, useContext } from "react";
-import { valuesAtom } from "../atoms/values-atom";
 import { taskAtom } from "../atoms/tasks-atom";
 import { currentlyEditedTaskIdAtom } from "../atoms/currently-edited-task-id";
 type ContextValue = {

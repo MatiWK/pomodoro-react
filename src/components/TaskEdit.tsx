@@ -1,9 +1,16 @@
 type  Props  = {title: string, note: string, onDataReady: (title: string, note: string) => void}
 
+const isValues = (x: unknown): x is {title: HTMLInputElement; note: HTMLInputElement} => {
+  return true
+}
+
 const TaskEdit = ({ title, note, onDataReady }: Props) => {
-  function handleSubmit(event: any) {
+  const  handleSubmit: React.FormEventHandler<HTMLFormElement> = event =>  {
     event.preventDefault();
-    onDataReady(event.target.title.value, event.target.note.value);
+    const values = event.target 
+    if (isValues(values)) {
+      onDataReady(values.title.value, values.note.value)
+    }
   }
 
   return (

@@ -10,12 +10,14 @@ export const modes = {
   [POMODORO]: {
     initialTime: pomodoroLength,
     label: "Pomodoro",
-    pickNextMode: (howManyPomodorosElapsed: any): ModeName => {
+    pickNextMode: (howManyPomodorosElapsed: number): ModeName => {
       return howManyPomodorosElapsed < 4 ? SHORT_BREAK : LONG_BREAK;
     },
     backgroundClassName: "background-pomodoro",
-    taskColorClassName: "taskbox-pomodoro"
+    taskColorClassName: "taskbox-pomodoro",
+    isBreak: false
   },
+  
   [SHORT_BREAK]: {
     initialTime: shortbreakLength,
     label: "Short Break",
@@ -23,7 +25,8 @@ export const modes = {
       return POMODORO;
     },
     backgroundClassName: "background-break",
-    taskColorClassName: "taskbox-break"
+    taskColorClassName: "taskbox-break",
+    isBreak: true
   },
   [LONG_BREAK]: {
     initialTime: longbreakLength,
@@ -32,6 +35,7 @@ export const modes = {
       return POMODORO;
     },
     backgroundClassName: "background-break",
-    taskColorClassName: "taskbox-break"
+    taskColorClassName: "taskbox-break",
+    isBreak: true
   }
 };
