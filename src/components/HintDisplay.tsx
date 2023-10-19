@@ -1,9 +1,8 @@
-import { useAtomValue } from "jotai"
 import { modes } from "../contexts/modes";
-import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
+import { useAppSelector } from "../state/hooks";
 
 export const HintDisplay = () => {
-    const mode = useAtomValue(chosenTimerAtom)
-    const isFocusTime = !modes[mode].isBreak
+    const chosenTimer = useAppSelector((state) =>  state.appSlice.chosenTimer);
+    const isFocusTime = !modes[chosenTimer].isBreak
     return isFocusTime ? <p>Time to focus!</p> : <p>Time for a Break! </p>
 }

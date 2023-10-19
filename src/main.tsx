@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 import { TimerProvider } from "./contexts/TimerContext";
 import { TaskProvider } from "./contexts/TaskContext";
@@ -11,10 +13,12 @@ if(root === null) {
 }
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-                  <TimerProvider>
-                    <TaskProvider>
-                      <App />
-                    </TaskProvider>
-                  </TimerProvider>
+    <Provider store={store}>
+      <TimerProvider>
+        <TaskProvider>
+          <App />
+        </TaskProvider>
+      </TimerProvider>
+    </Provider>
   </React.StrictMode>
 );

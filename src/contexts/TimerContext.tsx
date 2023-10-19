@@ -8,7 +8,8 @@ import { modes } from "./modes";
 import { useAtom, useSetAtom } from "jotai";
 import { isRunningAtom } from "../atoms/is-running-atom";
 import { timeAtom } from "../atoms/time-atom";
-import { chosenTimerAtom } from "../atoms/chosen-timer-atom";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { appSlice } from "../state/slices/app-slice";
 
 
 
@@ -56,10 +57,13 @@ const TimerRunner = ({
 export const TimerContext = createContext<null | ContextValue>(null);
 export const TimerProvider = ({ children }: PropsWithChildren) => {
   const setTime = useSetAtom(timeAtom);
-  const [chosenTimer, setChosenTimer] = useAtom(chosenTimerAtom);
+  const dispatch = useAppDispatch();
+  const chosenTimer = useAppSelector(state => state.appSlice.chosenTimer);
+  const setChosenTimer = (x: keyof typeof modes) => dispatch(appSlice.actions.setChosenTimer(x))
+
   const [isRunning, setIsRunning] = useAtom(isRunningAtom);
 
- 
+// poczyttaj o selektoraach z reduxa,  zainstaluj devtoole do jotaia i przenies atomki do reduxa xdd
 
 
 
