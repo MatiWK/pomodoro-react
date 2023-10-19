@@ -48,7 +48,7 @@ const TimerRunner = ({
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [time, isRunning, setIsRunning, takeNextTimer]);
+  }, [time, isRunning, setIsRunning, takeNextTimer, setTime]);
 
   return null;
 };

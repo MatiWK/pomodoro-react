@@ -8,7 +8,7 @@ export const IncrementButton = () => {
   return (
     <button
       type="button"
-      onClick={() => setCount((x: any) => x + 1)}
+      onClick={() => setCount((x: number) => x + 1)}
       className="ml-3"
     >
       <svg

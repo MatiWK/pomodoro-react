@@ -6,7 +6,7 @@ export const DecrementButton = () => {
   const [, setCount] = useAtom(countAtom);
 
   return (
-    <button type="button" onClick={() => setCount((x: any) => x - 1)}>
+    <button type="button" onClick={() => setCount((x: number) => x - 1)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
