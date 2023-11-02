@@ -3,28 +3,33 @@ import { IncrementButton } from "./IncrementButton";
 import { DecrementButton } from "./DecrementButton";
 import { InputCount } from "./InputCount";
 import { useAtomValue, useSetAtom } from "jotai";
-import { addClickedAtom } from "../atoms/add-clicked-atom";
 import { valuesAtom } from "../atoms/values-atom";
 import { useCreateTask } from "../hooks/use-create-task";
-import { taskCreationActiveAtom } from "../atoms/task-creation-active-atom";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { AddClickedSlice } from "../state/slices/note-slice";
+import { taskCreationActiveSlice } from "../state/slices/task-creation-active-slice";
 
 const AddTask = () => {
-  const setTaskCreationActive = useSetAtom(taskCreationActiveAtom)
+  // const setTaskCreationActive = useSetAtom(taskCreationActiveAtom)
   const values = useAtomValue(valuesAtom)
   const setValues = useSetAtom(valuesAtom)
-  const addClicked = useAtomValue(addClickedAtom)
   const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     const { value, name } = event.target;
     handleChange(value, name)
   } 
   const createTask = useCreateTask();
-  const setAddClicked = useSetAtom(addClickedAtom)
+
+  const dispatch = useAppDispatch();
+  const addClicked = useAppSelector(state => state.AddClickedSlice.addClicked);
+  const setAddClicked = (x: boolean) => dispatch(AddClickedSlice.actions.setAddClicked(x))
+
+  const setTaskCreationActive = (x: boolean) => dispatch(taskCreationActiveSlice.actions.setTaskCreationActive(x))  
 
   const handleCreateTask = () => {
     createTask(values.title, values.note);
     setAddClicked(false);
     setValues({ title: "", note: "" });
-    setTaskCreationActive(true);
+    setTaskCreationActive(false);
   };
   const cancelCreate = () => {
     setAddClicked(false);
@@ -66,6 +71,7 @@ const AddTask = () => {
             {!addClicked ? (
               <button
                 type="button"
+                // getting setAddClicked to redux
                 onClick={() => setAddClicked(true)}
                 style={{ color: "#a3a3a3" }}
                 className="text-sm my-5 underline"

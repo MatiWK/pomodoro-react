@@ -1,14 +1,14 @@
-import { useAtomValue } from "jotai";
 import { useTask } from "../contexts/TaskContext";
 import TaskEdit from "./TaskEdit";
-import { currentlyEditedTaskIdAtom } from "../atoms/currently-edited-task-id";
 import { useUpdateTask } from "../hooks/use-update-task";
+import {  useAppSelector } from "../state/hooks";
 type Props = { id: number; title: string; note: string };
 export const Task = ({ id, title, note }: Props) => {
   
   const { editTask, deleteTask } = useTask();
   const updateTask = useUpdateTask();
-  const currentlyEditedTaskId  = useAtomValue(currentlyEditedTaskIdAtom)
+  // const currentlyEditedTaskId  = useAtomValue(currentlyEditedTaskIdAtom)
+  const currentlyEditedTaskId = useAppSelector(state => state.currentlyEditedTaskIdSlice.currentlyEditedTaskId)
   const onDataReady = (title: string, note: string) => {
     updateTask(id, title, note);
   };

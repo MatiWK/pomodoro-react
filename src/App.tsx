@@ -5,16 +5,24 @@ import Timer from "./components/Timer";
 import AddTask from "./components/AddTask";
 import { Task } from "./components/Tasks";
 import { useTimer } from "./contexts/TimerContext";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { taskAtom } from "./atoms/tasks-atom";
-import { taskCreationActiveAtom } from "./atoms/task-creation-active-atom";
 import { HintDisplay } from "./components/HintDisplay";
+import { useAppDispatch, useAppSelector } from "./state/hooks";
+import { taskCreationActiveSlice } from "./state/slices/task-creation-active-slice";
 
 function App() {
   const { backgroundColor, taskColor } = useTimer();
-  const clicked = useAtomValue(taskCreationActiveAtom)
+  // const clicked = useAtomValue(taskCreationActiveAtom)
   const tasks = useAtomValue(taskAtom)
-  const setTaskCreationActive = useSetAtom(taskCreationActiveAtom);
+  // const setTaskCreationActive = useSetAtom(taskCreationActiveAtom);
+
+  const dispatch = useAppDispatch();
+
+  const clicked = useAppSelector(state => state.taskCreationActiveSlice.taskCreationActive)
+  const setTaskCreationActive = (x: boolean) => dispatch(taskCreationActiveSlice.actions.setTaskCreationActive(x))  
+
+
 
 
   return (

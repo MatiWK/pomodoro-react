@@ -1,7 +1,8 @@
 import { useSetAtom } from "jotai";
 import { PropsWithChildren, createContext, useContext } from "react";
 import { taskAtom } from "../atoms/tasks-atom";
-import { currentlyEditedTaskIdAtom } from "../atoms/currently-edited-task-id";
+import { useAppDispatch } from "../state/hooks";
+import { currentlyEditedTaskIdSlice } from "../state/slices/currently-edited-task-id-slice";
 type ContextValue = {
   deleteTask: (id: number) => void;
   editTask: (id: number) => void;
@@ -10,7 +11,8 @@ const TaskContext = createContext<null | ContextValue>(null);
 export const TaskProvider = ({ children }: PropsWithChildren) => {
   const setTasks = useSetAtom(taskAtom)
   
-  const setCurrentlyEditedTaskId = useSetAtom(currentlyEditedTaskIdAtom);
+  const dispatch = useAppDispatch();
+  const setCurrentlyEditedTaskId = (x: null | number) => dispatch(currentlyEditedTaskIdSlice.actions.setCurrentlyEditedTaskId(x))
 
   function deleteTask(id: number) {
     setTasks((tasks) => tasks.filter((task) => task.id !== id));

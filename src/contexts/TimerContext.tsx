@@ -6,10 +6,10 @@ import {
 } from "react";
 import { modes } from "./modes";
 import { useAtom, useSetAtom } from "jotai";
-import { isRunningAtom } from "../atoms/is-running-atom";
 import { timeAtom } from "../atoms/time-atom";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { appSlice } from "../state/slices/app-slice";
+import { isRunningSlice } from "../state/slices/is-running-slice";
 
 
 
@@ -31,7 +31,8 @@ const TimerRunner = ({
   takeNextTimer: () => void;
 }) => {
   const [time, setTime] = useAtom(timeAtom);
-  const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+  // const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+  const isRunning = useAppSelector(state => state.isRunningSlice.isRunning);
 
   
 
@@ -49,7 +50,7 @@ const TimerRunner = ({
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [time, isRunning, setIsRunning, takeNextTimer, setTime]);
+  }, [time, isRunning, takeNextTimer, setTime]);
 
   return null;
 };
@@ -61,7 +62,11 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   const chosenTimer = useAppSelector(state => state.appSlice.chosenTimer);
   const setChosenTimer = (x: keyof typeof modes) => dispatch(appSlice.actions.setChosenTimer(x))
 
-  const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+  // const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+  const isRunning = useAppSelector(state => state.isRunningSlice.isRunning);
+  const setIsRunning = (x: boolean) => dispatch(isRunningSlice.actions.setIsRunning(x))
+
+  
 
 // poczyttaj o selektoraach z reduxa,  zainstaluj devtoole do jotaia i przenies atomki do reduxa xdd
 
@@ -78,7 +83,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
 
 
   function toggle() {
-    setIsRunning((prev: boolean) => !prev);
+    setIsRunning(!isRunning);
   }
 
   const value: ContextValue = {

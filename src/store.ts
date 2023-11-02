@@ -1,9 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { appSlice } from './state/slices/app-slice'
+import { AddClickedSlice } from './state/slices/note-slice'
+import { currentlyEditedTaskIdSlice } from './state/slices/currently-edited-task-id-slice'
+import { isRunningSlice } from './state/slices/is-running-slice'
+import { taskCreationActiveSlice } from './state/slices/task-creation-active-slice'
 
 export const store = configureStore({
   reducer: {
-    appSlice: appSlice.reducer
+    appSlice: appSlice.reducer,
+    AddClickedSlice: AddClickedSlice.reducer,
+    currentlyEditedTaskIdSlice: currentlyEditedTaskIdSlice.reducer,
+    isRunningSlice: isRunningSlice.reducer,
+    taskCreationActiveSlice: taskCreationActiveSlice.reducer
   },
 })
 
