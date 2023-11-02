@@ -9,7 +9,6 @@ type ContextValue = {
 };
 const TaskContext = createContext<null | ContextValue>(null);
 export const TaskProvider = ({ children }: PropsWithChildren) => {
-  // const setTasks = useSetAtom(taskAtom)
   const dispatch = useAppDispatch();
   const tasks = useAppSelector(state => state.taskSlice.tasks)
 

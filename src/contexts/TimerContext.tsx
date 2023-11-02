@@ -58,14 +58,12 @@ const TimerRunner = ({
 
 export const TimerContext = createContext<null | ContextValue>(null);
 export const TimerProvider = ({ children }: PropsWithChildren) => {
-  // const setTime = useSetAtom(timeAtom);
   const dispatch = useAppDispatch();
 
   const setTime = (x: number) => dispatch(timeSlice.actions.setTime(x))
   const chosenTimer = useAppSelector(state => state.appSlice.chosenTimer);
   const setChosenTimer = (x: keyof typeof modes) => dispatch(appSlice.actions.setChosenTimer(x))
 
-  // const [isRunning, setIsRunning] = useAtom(isRunningAtom);
   const isRunning = useAppSelector(state => state.isRunningSlice.isRunning);
   const setIsRunning = (x: boolean) => dispatch(isRunningSlice.actions.setIsRunning(x))
 

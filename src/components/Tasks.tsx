@@ -7,7 +7,6 @@ export const Task = ({ id, title, note }: Props) => {
   
   const { editTask, deleteTask } = useTask();
   const updateTask = useUpdateTask();
-  // const currentlyEditedTaskId  = useAtomValue(currentlyEditedTaskIdAtom)
   const currentlyEditedTaskId = useAppSelector(state => state.currentlyEditedTaskIdSlice.currentlyEditedTaskId)
   const onDataReady = (title: string, note: string) => {
     updateTask(id, title, note);

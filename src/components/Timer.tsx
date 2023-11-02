@@ -5,7 +5,6 @@ import { useAppSelector } from "../state/hooks";
 
 const Timer = () => {
   const { restart, isRunning, toggle } = useTimer();
-  // const time = useAtomValue(timeAtom); 
   const time = useAppSelector(state => state.timeSlice.time)
 
   return (

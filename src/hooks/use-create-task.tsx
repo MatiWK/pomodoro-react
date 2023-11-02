@@ -4,7 +4,6 @@ import { taskSlice } from "../state/slices/task-slice";
 import { Task } from "../atoms/tasks-atom";
 
 export const useCreateTask = () => {
-  // const setTasks = useSetAtom(taskAtom)
   const dispatch = useAppDispatch();
 
   const tasks = useAppSelector(state => state.taskSlice.tasks)

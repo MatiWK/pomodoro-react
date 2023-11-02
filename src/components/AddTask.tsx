@@ -9,7 +9,6 @@ import { taskCreationActiveSlice } from "../state/slices/task-creation-active-sl
 import { valuesSlice } from "../state/slices/values-slice";
 
 const AddTask = () => {
-  // const setTaskCreationActive = useSetAtom(taskCreationActiveAtom)
   const values = useAppSelector(state => state.valuesSlice.values);
   const setValues = (x: {title: string, note: string}) => dispatch(valuesSlice.actions.setValues(x))
   const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {

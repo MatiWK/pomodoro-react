@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { countSlice } from "../state/slices/count-slice";
 
 export const IncrementButton = () => {
-  // const [, setCount] = useAtom(countAtom);
   const dispatch = useAppDispatch();
   const setCount = (x: number) => dispatch(countSlice.actions.setCount(x))
   const count = useAppSelector(state => state.countSlice.count)
