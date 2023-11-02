@@ -1,14 +1,20 @@
 
-import { useAtom } from "jotai";
-import { countAtom } from "../atoms/count-atom";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { countSlice } from "../state/slices/count-slice";
 
 export const IncrementButton = () => {
-  const [, setCount] = useAtom(countAtom);
+  // const [, setCount] = useAtom(countAtom);
+  const dispatch = useAppDispatch();
+  const setCount = (x: number) => dispatch(countSlice.actions.setCount(x))
+  const count = useAppSelector(state => state.countSlice.count)
+
 
   return (
     <button
       type="button"
-      onClick={() => setCount((x: number) => x + 1)}
+      onClick={() => {
+        const updatedCount = count + 1
+        setCount(updatedCount)}}
       className="ml-3"
     >
       <svg

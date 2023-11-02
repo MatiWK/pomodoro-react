@@ -11,10 +11,8 @@ import { taskCreationActiveSlice } from "./state/slices/task-creation-active-sli
 
 function App() {
   const { backgroundColor, taskColor } = useTimer();
-  // const clicked = useAtomValue(taskCreationActiveAtom)
-  // const tasks = useAtomValue(taskAtom)
+
   const tasks = useAppSelector(state => state.taskSlice.tasks)
-  // const setTaskCreationActive = useSetAtom(taskCreationActiveAtom);
 
   const dispatch = useAppDispatch();
 

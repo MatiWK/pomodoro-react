@@ -1,8 +1,7 @@
-import { useAtom } from "jotai";
-import { countAtom } from "../atoms/count-atom";
+import { useAppSelector } from "../state/hooks";
 
 export const InputCount = () => {
-  const [count, ] = useAtom(countAtom);
+  const count = useAppSelector(state => state.countSlice.count)
 
   return (
     <input

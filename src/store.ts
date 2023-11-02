@@ -5,6 +5,9 @@ import { currentlyEditedTaskIdSlice } from './state/slices/currently-edited-task
 import { isRunningSlice } from './state/slices/is-running-slice'
 import { taskCreationActiveSlice } from './state/slices/task-creation-active-slice'
 import { taskSlice } from './state/slices/task-slice'
+import { timeSlice } from './state/slices/time-slice'
+import { valuesSlice } from './state/slices/values-slice'
+import { countSlice } from './state/slices/count-slice'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +16,10 @@ export const store = configureStore({
     currentlyEditedTaskIdSlice: currentlyEditedTaskIdSlice.reducer,
     isRunningSlice: isRunningSlice.reducer,
     taskCreationActiveSlice: taskCreationActiveSlice.reducer,
-    taskSlice: taskSlice.reducer
+    taskSlice: taskSlice.reducer,
+    timeSlice: timeSlice.reducer,
+    valuesSlice: valuesSlice.reducer,
+    countSlice: countSlice.reducer
   },
 })
 

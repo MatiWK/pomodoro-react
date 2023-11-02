@@ -2,17 +2,16 @@ import { ChangeEventHandler } from "react";
 import { IncrementButton } from "./IncrementButton";
 import { DecrementButton } from "./DecrementButton";
 import { InputCount } from "./InputCount";
-import { useAtomValue, useSetAtom } from "jotai";
-import { valuesAtom } from "../atoms/values-atom";
 import { useCreateTask } from "../hooks/use-create-task";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { AddClickedSlice } from "../state/slices/note-slice";
 import { taskCreationActiveSlice } from "../state/slices/task-creation-active-slice";
+import { valuesSlice } from "../state/slices/values-slice";
 
 const AddTask = () => {
   // const setTaskCreationActive = useSetAtom(taskCreationActiveAtom)
-  const values = useAtomValue(valuesAtom)
-  const setValues = useSetAtom(valuesAtom)
+  const values = useAppSelector(state => state.valuesSlice.values);
+  const setValues = (x: {title: string, note: string}) => dispatch(valuesSlice.actions.setValues(x))
   const handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (event) => {
     const { value, name } = event.target;
     handleChange(value, name)
@@ -39,13 +38,11 @@ const AddTask = () => {
   };
 
   const handleChange = (value: string, name: string) => {
-
-    setValues((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
+    const updateValues = {
+      ...values,
+      [name]: value,
+    };
+    setValues(updateValues);
 
   };
 

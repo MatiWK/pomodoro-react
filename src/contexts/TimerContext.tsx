@@ -5,11 +5,10 @@ import {
   useEffect,
 } from "react";
 import { modes } from "./modes";
-import { useAtom, useSetAtom } from "jotai";
-import { timeAtom } from "../atoms/time-atom";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { appSlice } from "../state/slices/app-slice";
 import { isRunningSlice } from "../state/slices/is-running-slice";
+import { timeSlice } from "../state/slices/time-slice";
 
 
 
@@ -30,14 +29,16 @@ const TimerRunner = ({
 }: {
   takeNextTimer: () => void;
 }) => {
-  const [time, setTime] = useAtom(timeAtom);
-  // const [isRunning, setIsRunning] = useAtom(isRunningAtom);
+  const dispatch = useAppDispatch();
+  
+  const time = useAppSelector(state => state.timeSlice.time)
   const isRunning = useAppSelector(state => state.isRunningSlice.isRunning);
-
   
 
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
+    const setTime = (x: number) => dispatch(timeSlice.actions.setTime(x))
+
 
     if (isRunning) {
       interval = setInterval(() => {
@@ -50,15 +51,17 @@ const TimerRunner = ({
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [time, isRunning, takeNextTimer, setTime]);
+  }, [time, isRunning, takeNextTimer, dispatch]);
 
   return null;
 };
 
 export const TimerContext = createContext<null | ContextValue>(null);
 export const TimerProvider = ({ children }: PropsWithChildren) => {
-  const setTime = useSetAtom(timeAtom);
+  // const setTime = useSetAtom(timeAtom);
   const dispatch = useAppDispatch();
+
+  const setTime = (x: number) => dispatch(timeSlice.actions.setTime(x))
   const chosenTimer = useAppSelector(state => state.appSlice.chosenTimer);
   const setChosenTimer = (x: keyof typeof modes) => dispatch(appSlice.actions.setChosenTimer(x))
 
@@ -69,6 +72,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
   
 
 // poczyttaj o selektoraach z reduxa,  zainstaluj devtoole do jotaia i przenies atomki do reduxa xdd
+// ATOMKI PRZENIESIONE TERAZ RESZTA TO CHILL JUZ
 
 
 

@@ -13,7 +13,7 @@ export const AddClickedSlice = createSlice({
     name: 'addNote',
     initialState,
     reducers: {
-        setAddClicked: (state, action: PalyoadAction<boolean>) => {
+        setAddClicked: (state, action: PayloadAction<boolean>) => {
             state.addClicked = action.payload
         }
     }

@@ -1,12 +1,18 @@
 
-import { useAtom } from "jotai";
-import { countAtom } from "../atoms/count-atom";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { countSlice } from "../state/slices/count-slice";
 
 export const DecrementButton = () => {
-  const [, setCount] = useAtom(countAtom);
+  const dispatch = useAppDispatch();
+  const setCount = (x: number) => dispatch(countSlice.actions.setCount(x))
+  const count = useAppSelector(state => state.countSlice.count)
+
 
   return (
-    <button type="button" onClick={() => setCount((x: number) => x - 1)}>
+    <button type="button" onClick={() => {
+      const updatedCount = count - 1
+      setCount(updatedCount)
+    }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
