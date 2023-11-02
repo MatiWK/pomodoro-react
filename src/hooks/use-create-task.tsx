@@ -1,16 +1,22 @@
-import { useSetAtom } from "jotai";
 import { useCallback } from "react"
-import { taskAtom } from "../atoms/tasks-atom";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { taskSlice } from "../state/slices/task-slice";
+import { Task } from "../atoms/tasks-atom";
 
 export const useCreateTask = () => {
-  const setTasks = useSetAtom(taskAtom)
+  // const setTasks = useSetAtom(taskAtom)
+  const dispatch = useAppDispatch();
+
+  const tasks = useAppSelector(state => state.taskSlice.tasks)
+  
     
     return useCallback((title: string, note: string) => {
-        setTasks((prev) => {
-          return [
-            ...prev,
-            { title: title, note: note, id: Date.now(), exist: true },
-          ];
-        });
-      }, [setTasks])
+    const setTasks = (x: Task[]) => dispatch(taskSlice.actions.setTasks(x))
+
+        const updatedTasks = [
+          ...tasks,
+          { title: title, note: note, id: Date.now(), exist: true },
+        ];
+        setTasks(updatedTasks);
+      }, [dispatch, tasks])
 } 

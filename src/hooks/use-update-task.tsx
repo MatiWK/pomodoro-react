@@ -1,22 +1,23 @@
-import { useSetAtom } from "jotai";
 import { useCallback } from "react"
-import { taskAtom } from "../atoms/tasks-atom";
-import { useAppDispatch } from "../state/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { currentlyEditedTaskIdSlice } from "../state/slices/currently-edited-task-id-slice";
+import { taskSlice } from "../state/slices/task-slice";
+import { Task } from "../atoms/tasks-atom";
 
 export const useUpdateTask = () => {
-    const setTasks = useSetAtom(taskAtom);
     const dispatch = useAppDispatch();
 
-    return useCallback((id: number, title: string, note: string) => {
-    const setCurrentlyEditedTaskId = (x: null) => dispatch(currentlyEditedTaskIdSlice.actions.setCurrentlyEditedTaskId(x))
+  const tasks = useAppSelector(state => state.taskSlice.tasks)
+    
 
-        setTasks((tasks) => {
-          const result = tasks.map((task) => {
-            return task.id === id ? { ...task, title, note } : task;
-          });
-          return result;
-        });
+    return useCallback((id: number, title: string, note: string) => {
+      const setCurrentlyEditedTaskId = (x: null) => dispatch(currentlyEditedTaskIdSlice.actions.setCurrentlyEditedTaskId(x))
+      const setTasks = (x: Task[]) => dispatch(taskSlice.actions.setTasks(x))
+      
+      const result = tasks.map((task) => {
+        return task.id === id ? { ...task, title, note } : task;
+      });
+        setTasks(result);
         setCurrentlyEditedTaskId(null);
-      }, [ setTasks, dispatch])
+      }, [tasks, dispatch])
 }
