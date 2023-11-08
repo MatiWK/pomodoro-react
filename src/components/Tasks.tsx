@@ -1,11 +1,19 @@
 import { useTask } from "../contexts/TaskContext";
 import TaskEdit from "./TaskEdit";
 import { useUpdateTask } from "../hooks/use-update-task";
-import {  useAppSelector } from "../state/hooks";
+import {  useAppDispatch, useAppSelector } from "../state/hooks";
+import { taskSlice } from "../state/slices/task-slice";
 type Props = { id: number; title: string; note: string };
 export const Task = ({ id, title, note }: Props) => {
   
-  const { editTask, deleteTask } = useTask();
+  const { editTask } = useTask();
+
+  const dispatch = useAppDispatch();
+
+  const deleteTask = (id: number) => {
+    dispatch(taskSlice.actions.deleteTask({id}))
+  }  
+
   const updateTask = useUpdateTask();
   const currentlyEditedTaskId = useAppSelector(state => state.currentlyEditedTaskIdSlice.currentlyEditedTaskId)
   const onDataReady = (title: string, note: string) => {

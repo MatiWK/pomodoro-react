@@ -28,6 +28,9 @@ export const taskSlice = createSlice({
                 note: action.payload.note,
                 exist: true
             })
+        },
+        deleteTask: (state, action: PayloadAction<Pick<Task, 'id'>>) => {
+            state.tasks = state.tasks.filter((task) => task.id !== action.payload.id)
         }
     }
 })
