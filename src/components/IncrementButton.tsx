@@ -13,7 +13,10 @@ export const IncrementButton = () => {
       type="button"
       onClick={() => {
         const updatedCount = count + 1
-        setCount(updatedCount)}}
+        setCount(updatedCount)
+        }
+      
+      }
       className="ml-3"
     >
       <svg

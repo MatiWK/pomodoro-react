@@ -20,6 +20,14 @@ export const taskSlice = createSlice({
     reducers: {
         setTasks: (state, action: PayloadAction<Task[]>)=> {
             state.tasks = action.payload
+        },
+        createTask: (state, action: PayloadAction<Pick<Task,'title' | 'note'>>) => {
+            state.tasks.push({
+                id: Date.now(),
+                title: action.payload.title,
+                note: action.payload.note,
+                exist: true
+            })
         }
     }
 })

@@ -2,11 +2,11 @@ import { ChangeEventHandler } from "react";
 import { IncrementButton } from "./IncrementButton";
 import { DecrementButton } from "./DecrementButton";
 import { InputCount } from "./InputCount";
-import { useCreateTask } from "../hooks/use-create-task";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { AddClickedSlice } from "../state/slices/note-slice";
 import { taskCreationActiveSlice } from "../state/slices/task-creation-active-slice";
 import { valuesSlice } from "../state/slices/values-slice";
+import { taskSlice } from "../state/slices/task-slice";
 
 const AddTask = () => {
   const values = useAppSelector(state => state.valuesSlice.values);
@@ -15,7 +15,6 @@ const AddTask = () => {
     const { value, name } = event.target;
     handleChange(value, name)
   } 
-  const createTask = useCreateTask();
 
   const dispatch = useAppDispatch();
   const addClicked = useAppSelector(state => state.AddClickedSlice.addClicked);
@@ -24,7 +23,10 @@ const AddTask = () => {
   const setTaskCreationActive = (x: boolean) => dispatch(taskCreationActiveSlice.actions.setTaskCreationActive(x))  
 
   const handleCreateTask = () => {
-    createTask(values.title, values.note);
+    dispatch(taskSlice.actions.createTask({
+      title: values.title, 
+      note: values.note
+    }))
     setAddClicked(false);
     setValues({ title: "", note: "" });
     setTaskCreationActive(false);
