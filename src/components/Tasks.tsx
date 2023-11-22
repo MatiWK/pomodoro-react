@@ -1,8 +1,9 @@
 import { useTask } from "../contexts/TaskContext";
 import TaskEdit from "./TaskEdit";
-import { useUpdateTask } from "../hooks/use-update-task";
+// import { useUpdateTask } from "../hooks/use-update-task";
 import {  useAppDispatch, useAppSelector } from "../state/hooks";
 import { taskSlice } from "../state/slices/task-slice";
+import { currentlyEditedTaskIdSlice } from "../state/slices/currently-edited-task-id-slice";
 type Props = { id: number; title: string; note: string };
 export const Task = ({ id, title, note }: Props) => {
   
@@ -14,10 +15,19 @@ export const Task = ({ id, title, note }: Props) => {
     dispatch(taskSlice.actions.deleteTask({id}))
   }  
 
-  const updateTask = useUpdateTask();
+  // const updateTask = useUpdateTask();
   const currentlyEditedTaskId = useAppSelector(state => state.currentlyEditedTaskIdSlice.currentlyEditedTaskId)
+  const setCurrentlyEditedTaskId = (x: null) => dispatch(currentlyEditedTaskIdSlice.actions.setCurrentlyEditedTaskId(x))
+  
   const onDataReady = (title: string, note: string) => {
-    updateTask(id, title, note);
+    // updateTask(id, title, note);
+    dispatch(taskSlice.actions.updateTask({
+      id: id,
+      title: title,
+      note: note
+    }))
+    setCurrentlyEditedTaskId(null);
+
   };
 
   return (

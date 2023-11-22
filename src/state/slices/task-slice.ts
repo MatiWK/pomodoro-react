@@ -31,6 +31,16 @@ export const taskSlice = createSlice({
         },
         deleteTask: (state, action: PayloadAction<Pick<Task, 'id'>>) => {
             state.tasks = state.tasks.filter((task) => task.id !== action.payload.id)
+        },
+        updateTask: (state, action: PayloadAction<Pick<Task, 'id' | 'title' | 'note'>>) => {
+            state.tasks = state.tasks.map((task) => {
+                return task.id === action.payload.id ? {
+                     ...task,
+                      title: action.payload.title,
+                      note: action.payload.note 
+                    } : task;
+              })
+              
         }
     }
 })
