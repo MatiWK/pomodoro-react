@@ -8,6 +8,7 @@ import { useTimer } from "./contexts/TimerContext";
 import { HintDisplay } from "./components/HintDisplay";
 import { useAppDispatch, useAppSelector } from "./state/hooks";
 import { taskCreationActiveSlice } from "./state/slices/task-creation-active-slice";
+import PlayGround from "./machines/task-machine";
 
 function App() {
   const { backgroundColor, taskColor } = useTimer();
@@ -27,6 +28,7 @@ function App() {
       <div className={backgroundColor + " w-screen min-h-screen flex"}>
         <div className="container">
           <Nav />
+          <PlayGround />
           <div
             className={
               " timer-color timer-div text-center rounded-lg font-bold"

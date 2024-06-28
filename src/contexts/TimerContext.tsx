@@ -69,11 +69,6 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
 
   
 
-// poczyttaj o selektoraach z reduxa,  zainstaluj devtoole do jotaia i przenies atomki do reduxa xdd
-// ATOMKI PRZENIESIONE TERAZ RESZTA TO CHILL JUZ
-
-
-
   const takeNextTimer = () => {
     const timer = modes[chosenTimer];
     const nextTimerName = timer.pickNextMode(1);
